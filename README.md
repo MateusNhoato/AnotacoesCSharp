@@ -1,2 +1,3 @@
 # AnotacoesCSharp
-Repositório para guardar anotações relacionadas com meus estudos da linguagem C#. 
+
+Repositório para guardar anotações relacionadas aos meus estudos da linguagem C#. 
