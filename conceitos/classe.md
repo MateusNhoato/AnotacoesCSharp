@@ -9,8 +9,8 @@ A classe também pode prover muitos outros recursos, tais como:
 - Construtores
 - Sobrecarga
 - Encapsulamento
-- [Herança](heranca)
-- [Polimorfismo](polimorfismo)
+- [Herança](heranca.md)
+- [Polimorfismo](polimorfismo.md)
 
 Exemplos:
 - *Entidades*: Produto, Cliente, Triangulo

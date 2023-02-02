@@ -2,7 +2,7 @@
 É um tipo de associação que permite que uma classe herde dados e comportamentos de outra
 Vantagens
 - Reuso
-- [Polimorfismo](polimorfismo)
+- [Polimorfismo](polimorfismo.md)
 
 Definições importantes:
 

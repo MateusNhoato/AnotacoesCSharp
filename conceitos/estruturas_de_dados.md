@@ -1,6 +1,6 @@
 # Estrutura de Dados
 
-Estruturas de dados (Data Structures) são estruturas que armazenam  dados ou [variáveis](variaveis) de tipos iguais. Podemos adicionar, remover ou alterar objetos dentro de uma estrutura de dados.
+Estruturas de dados (Data Structures) são estruturas que armazenam  dados ou [variáveis](variaveis.md) de tipos iguais. Podemos adicionar, remover ou alterar objetos dentro de uma estrutura de dados.
 
 ## Tipos de estruturas de dados:
 

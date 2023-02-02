@@ -12,7 +12,7 @@
 
 
 
-## Modificadores de Acesso em [Classes](classe)
+## Modificadores de Acesso em [Classes](classe.md)
 
 Acesso por qualquer classe 
 - `public` class Product

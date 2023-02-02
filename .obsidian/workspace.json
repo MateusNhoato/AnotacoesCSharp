@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "linq.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "linq.md",
+                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "linq.md",
+                "file": "README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "linq.md"
+                "file": "README.md"
               }
             }
           }
@@ -148,15 +148,15 @@
   },
   "active": "7ba3c451194369fb",
   "lastOpenFiles": [
-    "conceitos/delegates.md",
-    "conceitos/lambda.md",
-    "conceitos/interface.md",
     "linq.md",
-    "README.md",
-    "conceitos/estruturas_de_dados.md",
     "aplicacao_web_mvc.md",
-    "conceitos/heranca.md",
     "conceitos/variaveis.md",
-    "().md"
+    "conceitos/polimorfismo.md",
+    "conceitos/nullable.md",
+    "conceitos/namespace.md",
+    "conceitos/modificadores_de_acesso.md",
+    "conceitos/modificador_de_parametros.md",
+    "conceitos/lambda.md",
+    "conceitos/interface.md"
   ]
 }

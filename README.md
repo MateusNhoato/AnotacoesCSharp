@@ -1,3 +1,6 @@
 # AnotacoesCSharp
 
-Repositório para guardar anotações relacionadas aos meus estudos da linguagem C#. 
+Anotações relacionadas a estudos da linguagem C#.
+
+### Autor
+[Mateus Nhoato](https://github.com/MateusNhoato)

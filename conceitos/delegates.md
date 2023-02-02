@@ -217,7 +217,7 @@ Este recurso é válido para qualquer delegate (Action, Func, Predicate, etc...)
 
 1. Métodos Anônimos (Anonymous Method)
 
-2. [Expressões Lambdas](lambda) (Lambdas Expressions)
+2. [Expressões Lambdas](lambda.md) (Lambdas Expressions)
 
 
 
@@ -261,7 +261,7 @@ Nesta declaração estamos definindo um delegate com um método sem nome (gerado
 
 ==Nota: Lembre-se que os parâmetros definidos em um método anônimo possuem escopo de boloco, ou seja, são válidos somente dentro da declaração do mêtodo anônimo.==
 
-#### Usando [Expressões Lambdas](lambda)
+#### Usando [Expressões Lambdas](lambda.md)
 
 Uma expressão lambda é uma função anônima, ou seja, um método sem uma declaração, sem modificador de acesso, sem declaração de valor de retorno e sem nome. Elas podem conter instruções e expressões, e podemos usá-las para criar delegates ou tipo de árvores de expressão. O operador lambda é identificado como " =>" e significa 'vá para'.
 
@@ -324,7 +324,7 @@ public class Aluno
 }
 ```
 
-[Expressão Condicional Ternária](condicional_ternaria)
+[Expressão Condicional Ternária](condicional_ternaria.md)
 
 ==Assim o delegate **Func** pode ser usado sempre que **devemos ter um valor de retorno.**==
 
@@ -341,7 +341,7 @@ O Delegate Action encapsula um método que pode possuir até 16 parâmetros e qu
 
 - Action, Action< T >, Action<T1, T2>,..., Action<T1,....T16>.
 
-Este delegate é usado em conjunto com [*Arrays* e *Listas*](estruturas_de_dados) , pois ele evita que você tenha que criar um método exclusivo para iterar a respectiva coleção. As classes *Array* e *List* possuem vários métodos que recebem como parâmetros delegates do tipo **Action**, como veremos a seguir. Então, se precisa de um delegate que não devolve nenhum valor, pode usar o **Action**.
+Este delegate é usado em conjunto com [*Arrays* e *Listas*](estruturas_de_dados.md) , pois ele evita que você tenha que criar um método exclusivo para iterar a respectiva coleção. As classes *Array* e *List* possuem vários métodos que recebem como parâmetros delegates do tipo **Action**, como veremos a seguir. Então, se precisa de um delegate que não devolve nenhum valor, pode usar o **Action**.
 
 ### Sintaxe:
 ```cs
@@ -439,7 +439,7 @@ Alguns métodos que aceitam Delegate Predicate:
 
 - `FindLast` - Retorna o último objeto que satisfaz a condição 
 
-Normalmente, o **delegate Predicate< T >** é representado por uma [expressão de lambda](lambda). Como as variáveis com escopo local estão disponíveis para a expressão de lambda, é fácil testar uma condição que não é conhecida precisamente em tempo de compilação.
+Normalmente, o **delegate Predicate< T >** é representado por uma [expressão de lambda](lambda.md). Como as variáveis com escopo local estão disponíveis para a expressão de lambda, é fácil testar uma condição que não é conhecida precisamente em tempo de compilação.
 
 ### Sintaxe:
 ```cs

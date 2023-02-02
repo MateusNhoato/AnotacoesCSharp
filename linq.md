@@ -35,7 +35,7 @@ A LINQ fornece uma experiência de consulta consistente para consultar objetos, 
  
 ## Retornos da LINQ
 
-As consultas LINQ usam métodos de extensão para classes que implementam as [interfaces](conceitos/interface) **IEnumerable** ou **IQueryable**.
+As consultas LINQ usam métodos de extensão para classes que implementam as [interfaces](conceitos/interface.md) **IEnumerable** ou **IQueryable**.
 
 **Enumerable** e **Queryable** são duas classes estáticas que contêm métodos de extensão para escrever consultas LINQ.
 
@@ -73,7 +73,7 @@ Os métodos LINQ que retornam IEnumerable< T > têm um conceito de **execução 
 
 ==Todos os métodos genéricos LINQ podem **inferir implicitamente argumentos de tipo**, portanto não precisamos especificá-los  (na maioria dos casos usamos *var*).==
 
-A maioria dos métodos LINQ aceita [delegates](conceitos/delegates) Func<> e Predicate<>. A opção mais comum para fornecer um delegate é escrever uma [**expressão lambda**](conceitos/lambda).
+A maioria dos métodos LINQ aceita [delegates](conceitos/delegates.md) Func<> e Predicate<>. A opção mais comum para fornecer um delegate é escrever uma [**expressão lambda**](conceitos/lambda.md).
 
 Ao trabalhar com a interface IQueryable< T >, a consulta é compilada (em SQL, por exemplo) e executada remotamente.
 
