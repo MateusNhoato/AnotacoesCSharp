@@ -15,7 +15,9 @@ Exemplo:
 - <font color="blue">Tratamento da expressão, ou blocos de instruções. Gera o resultado esperado (no caso x * x).</font>
 
 ## Surgimento das Expressões Lambdas
+
 Vamos utilizar de um exemplo para ilustrar o porquê do surgimento das expressões lambdas.
+
 ```cs
 // lista de nomes
 List<string> nomes = new();
@@ -38,7 +40,9 @@ string? resultado = nomes.Find(VerificaNomeNaLista("Pedro"));
 // imprindo o resultado
 Console.WriteLine(resultado);
 ```
-Saída no Console:
+
+Saída:
+
 ```
 Pedro
 ```
@@ -46,6 +50,7 @@ Pedro
 No exemplo acima estamos passando um ***delegate predicate*** para a consulta. Isto é um predicato que aceita uma string (mesmo tipo de objeto que a lista) e retorna um bool. Mas perceba como essa função é "hard coded", pois dentro dela só estamos checkando para um nome específico que digitamos (Pedro, no caso).
 
 A evolução desse método foi começar a passar delegates anônimos para fazer a consulta, mas ainda não era a melhor alternativa. As expressões lambdas foram introduzidas para *simplificar* ainda mais o código, pois ela permite passar uma expressão embutida como um delegate com uma sintaxe enxuta.
+
 ```cs
 ...
 //fazendo consulta com delegate anônimo
@@ -61,7 +66,9 @@ string? resultado2 = nomes.Find(nome => nome.Equals("Pedro");
 Console.WriteLine(resultado1);
 Console.WriteLine(resultado2);
 ```
-Saída no Console:
+
+Saída:
+
 ```
 José
 Pedro

@@ -23,6 +23,7 @@ Saída
 ```
 
 ## Ref
+
  **ref** é utilizado para se referenciar à própria variável que está no parâmetro da chamada de uma função. Pois normalmente quando recebemos algum valor como parâmetro, simplesmente fazemos uma cópia desse valor para dentro da função (para seu escopo local). Com ref podemos alterar a variável original:
 
 ```cs
@@ -43,6 +44,7 @@ Saída
 ```
 
 ## Out
+
 O modificador **out** é similar ao ref (faz o parâmetro ser uma referência para a variável original), mas não exige que a variável original seja iniciada.
 
 ```cs
@@ -61,9 +63,11 @@ Saída
 ```
 20
 ```
+
 ## Diferenças entre **ref** e **out**
+
 A variável passada como parâmetro **ref** DEVE ter sido iniciada. A variável passada como parâmetro **out** não precisa ter sido iniciada.
 
 Conclusão: ambos são muito similares, mas ref é uma forma do compilador obrigar o usuário a iniciar a variável.
 
-Nota: ambos são considerados "code smells" (design ruim) e devem ser evitados.
+==Nota: ambos são considerados "code smells" (design ruim) e devem ser evitados.==

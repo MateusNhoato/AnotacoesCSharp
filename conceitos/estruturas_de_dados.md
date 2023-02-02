@@ -1,6 +1,10 @@
 # Estrutura de Dados
 
-## Vetores
+Estruturas de dados (Data Structures) são estruturas que armazenam  dados ou [variáveis](variaveis) de tipos iguais. Podemos adicionar, remover ou alterar objetos dentro de uma estrutura de dados.
+
+## Tipos de estruturas de dados:
+
+### Vetores
 Vetor é o nome dado a arranjos unidimensionais.
 
 Arranjo é uma estrutura de dados:
@@ -15,11 +19,10 @@ Desvantagens:
 - Tamanho fixo
 - Dificuldade para se realizar inserções e deleções
 
-## Matrizes
-"Matriz" é o nome dado a arranjos bidimensionais. Matrizes têm as mesmas características que Vetores,
+### Matrizes
+"Matriz" é o nome dado a arranjos bidimensionais. Matrizes têm as mesmas características que Vetores, porém com uma dimensão a mais.
 
-
-## Listas
+### Listas
 Namespace: System.Collections.Generic
 
 Lista é uma estrutura de dados:
@@ -36,7 +39,7 @@ Desvantagens:
 - Acesso sequencial aos elementos
 
 
-## HashSet e SortedSet
+### HashSet e SortedSet
 Represeta um cojunto de elementos (similar ao da álgebra).
 
 - Não admite repetições
@@ -44,18 +47,22 @@ Represeta um cojunto de elementos (similar ao da álgebra).
 - Acesso, inserção e remoção de elementos são rápidos
 - Oferece operações eficientes de conjunto: interseção, união, diferença.
 
-### Diferenças entre HashSet e SortedSet
-**Hashset**
+#### Diferenças entre HashSet e SortedSet
+
+##### **Hashset**
+
 - Armazenamento em *tabela hash*
 - Extremamente rápido: inserção, remoção e busca O(1)
 - Ordem dos elementos não é garantida
 
-**SortedSet**
+##### **SortedSet**
+
 - Armazenamento em *árvore*
 - Rápido, inserção, remoção e busca O(log(n))
 - Os elementos são armazenados ordenadamente conforme implementação IComparer<>
 
-### Como as coleções Hash testam igualdade?
+##### Como as coleções Hash testam igualdade?
+
 Se GetHashCode e Equals estiverem implementados:
 - Primeiro é utilizado GetHashCode. Se der igual, usa o Equals para confirmar.
 
@@ -64,7 +71,7 @@ Se GetHashCode e Equals **NÃO** estiverem implementados:
     - Tipos valor: compara os valores dos atributos
 
 
-## Dictionary&lt;TKey,TValue> e SortedDictionary
+### Dictionary< TKey,TValue > e SortedDictionary
 
 É uma coleção de pares chave/ valor.
 
@@ -73,14 +80,16 @@ Se GetHashCode e Equals **NÃO** estiverem implementados:
 - Acesso, inserção e remoção de elementos são rápidos
 - Uso comum: cookies, local storage, qualquer modelo chave-valor
 
-### Diferenças entre Dictionary e SortedDictionary
+#### Diferenças entre Dictionary e SortedDictionary
 
-Dictionary
+##### Dictionary
+
 - Armazenamento em tabela hash
 - Extremamente rápido: inserção, remoção e busca O(1)
 - A ordem dos elementos não é garantida
 
- SortedDictionary
+##### SortedDictionary
+ 
  - Armazenamento em árvore
 - Rápido: inserção, remoção e busca O(log(n))
 - Os elementos são armazenados ordenadamente conforme implementação IComparer<.T>

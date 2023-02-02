@@ -14,17 +14,13 @@ namespace SistemaBancario
     }
 }
 ```
-A palavra reservada var tem a função de informar o sistema que 
-ali está ocorrendo a criação de uma variável. Nesse exemplo, estamos criando um novo objeto e atribuindo seu valor e estado na 
-variável objetoGerente. É possível também criar a variável com o 
-tipo dela implicitamente ao invés de usar a palavra ***var***.
 
-As variáveis têm uma importância enorme no mundo de desenvolvimento de software pois são nelas que guardamos, manipulamos, alteramos e exibimos valores para os usuários finais ou simplesmente fazemos cálculos e manipulações e enviamos talvez para 
-outros sistemas que queiram se comunicar.
+A palavra reservada var tem a função de informar o sistema que ali está ocorrendo a criação de uma variável. Nesse exemplo, estamos criando um novo objeto e atribuindo seu valor e estado na 
+variável objetoGerente. É possível também criar a variável com o tipo dela implicitamente ao invés de usar a palavra ***var***.
 
-De forma objetiva, a variável é meramente um nome dado para 
-um armazenamento de dados que nosso programa vai manipular. 
-Cada variável no C# possui um tipo específico que determina seu 
+As variáveis têm uma importância enorme no mundo de desenvolvimento de software pois são nelas que guardamos, manipulamos, alteramos e exibimos valores para os usuários finais ou simplesmente fazemos cálculos e manipulações e enviamos talvez para outros sistemas que queiram se comunicar.
+
+De forma objetiva, a variável é meramente um nome dado para um armazenamento de dados que nosso programa vai manipular. Cada variável no C# possui um tipo específico que determina seu 
 tamanho e o quanto de informação ela pode salvar na memória.
 
 Os tipos básicos são:
@@ -46,9 +42,11 @@ o *float* é, na verdade, *float32*, enquanto o double é *float64*. 32 e 64 se 
 
 
 ## Definindo uma variável
-Para definirmos variáveis no C#:
 
+Para definirmos variáveis no C#:
+```
 (tipo de dados) (nome da variavel) = (valor);
+```
 
 Exemplos:
 ```cs
@@ -67,9 +65,7 @@ namespace SistemaBancario
 }
 ```
 
-Visualizando o nome das variáveis podemos perceber 
-que cada uma delas tem uma finalidade, um tipo e um valor inicial. 
-Assim que essas variáveis ficam disponíveis na memória é possível acessá-las, exibi-las ou manipulá-las.
+Visualizando o nome das variáveis podemos perceber que cada uma delas tem uma finalidade, um tipo e um valor inicial. Assim que essas variáveis ficam disponíveis na memória é possível acessá-las, exibi-las ou manipulá-las.
 
 Exemplo com vários tipos:
 ```cs
@@ -84,29 +80,21 @@ Console.WriteLine($"Nome do usuário:{nome}");
 Console.WriteLine($"Idade:{idade} | Altura:{altura} | Cpf:{cpf} | Sexo:{sexo}");
 Console.WriteLine($"Nota:{nota}"); 
 ```
-```
+
 Saída:
 
+```
 Nome do usuário:João da Silva
 Idade:20 | Altura:1,73 | Cpf:123456789 | Sexo:M
 Nota:7,8
 ```
 ## Conversão de dados
-No C# temos dois tipos de dados que são sempre armazenados 
-na memória, sendo tipos de valor e referência. Quando atribuímos 
-um valor a uma variável dos tipos int, float, double, decimal, bool e 
-char são do tipo VALOR. Isto porque o conteúdo vai diretamente 
-para um local na memória.
+No C# temos dois tipos de dados que são sempre armazenados na memória, sendo tipos de valor e referência. Quando atribuímos um valor a uma variável dos tipos int, float, double, decimal, bool e char são do tipo VALOR. Isto porque o conteúdo vai diretamente para um local na memória.
 
-Já o tipo por REFERÊNCIA, armazena o endereço do valor onde 
-está armazenado, por exemplo, object, string e array.
-Em qualquer tipo de aplicação é comum a conversão de tipos de 
-dados, int para double, texto para data, object para float e vice-versa. 
-A estas conversões chamamos de Boxing e Unboxing.
+Já o tipo por REFERÊNCIA, armazena o endereço do valor onde está armazenado, por exemplo, object, string e array. Em qualquer tipo de aplicação é comum a conversão de tipos de 
+dados, int para double, texto para data, object para float e vice-versa.  A estas conversões chamamos de Boxing e Unboxing.
 
-Boxing é a conversão de um tipo de valor para o tipo de objeto 
-ou qualquer tipo de interface implementado por este tipo de valor. 
-O boxing está implícito.
+Boxing é a conversão de um tipo de valor para o tipo de objeto ou qualquer tipo de interface implementado por este tipo de valor. O boxing está implícito.
 
 ### Boxing
 ```cs

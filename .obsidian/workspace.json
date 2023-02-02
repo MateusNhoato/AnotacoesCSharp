@@ -1,0 +1,162 @@
+{
+  "main": {
+    "id": "8b7f51884f341cd3",
+    "type": "split",
+    "children": [
+      {
+        "id": "f9b2c3884b855bf7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7ba3c451194369fb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "linq.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "6d2904ac4734dc2b",
+    "type": "split",
+    "children": [
+      {
+        "id": "132a47c97ea4cbf7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a70ca6d0087b0c22",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "fd8e99cb3f7d183d",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "f4d2b96471e3e2a7",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "e4d26bb160610ef2",
+    "type": "split",
+    "children": [
+      {
+        "id": "81e865592cbf24cc",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f401b0c726e5bcb4",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "linq.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "0defd077c5d73f52",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "linq.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "3739eb2462c12dba",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "55caf28de07c6bd8",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "linq.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir a troca rápida": false,
+      "graph:Abrir visualização em gráfico": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Abrir a nota de hoje": false,
+      "templates:Inserir modelo": false,
+      "command-palette:Abrir paleta de comandos": false
+    }
+  },
+  "active": "7ba3c451194369fb",
+  "lastOpenFiles": [
+    "conceitos/delegates.md",
+    "conceitos/lambda.md",
+    "conceitos/interface.md",
+    "linq.md",
+    "README.md",
+    "conceitos/estruturas_de_dados.md",
+    "aplicacao_web_mvc.md",
+    "conceitos/heranca.md",
+    "conceitos/variaveis.md",
+    "().md"
+  ]
+}

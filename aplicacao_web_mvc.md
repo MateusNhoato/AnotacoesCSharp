@@ -6,7 +6,7 @@ Anotações feitas baseadas no curso ["ASP .NET Core MVC- Criando um Site do Zer
 
 ## Tabela de Conteúdo
 - [Modelo de Domínio](#modelo-de-domínio)
-- [Ferramenta ORM](#usar-uma-ferramenta-orm)
+- [Ferramenta ORM](#ferramenta-orm)
 - [Entity Framework Core](#entity-framework-core)
    - [Convenções](#convenções-usadas)
    - [Funcionamento](#funcionamento)
@@ -514,9 +514,9 @@ O recurso do Intellisense também está disponível para as Tag Helpers.
 
 ### **Tag Helper Form**
 
-- Gera o valor de atributo Action **HTML&lt;FORM>** para uma Action de um controlador MVC ou uma rota nomeada;
+- Gera o valor de atributo Action **HTML< FORM >** para uma Action de um controlador MVC ou uma rota nomeada;
 - Gera um **Token de Verificação de Solicitação** oculto para evitar a falsificação de solicitações entre sites (quando usado com o atributo **[ValidateAntiForgeryToen]** no método de action HTTP Post);
-- Fornece o atributo asp-route- &lt;**Nome do parâmetro**&gt;, no qual &lt;**Nome do parâmetro**&gt; é adicionado aos valores da rota. Os parâmetros **routeValues&&** para Html.BeginForm e Html.BeginRouteForm fornecem funcionalidades semelhante;
+- Fornece o atributo asp-route- < Nome do parâmetro** >, no qual < **Nome do parâmetro** > é adicionado aos valores da rota. Os parâmetros **routeValues&&** para Html.BeginForm e Html.BeginRouteForm fornecem funcionalidades semelhante;
 - Possui os HTML Helpers alternativos: **HTML Html.BeginForm** e **Html.BeginRouteForm**;
 
 `Exemplo`
@@ -535,7 +535,7 @@ Gera a seguinte saída HTML:
 
 ### **Tag Helper Input**
 
-A Tag Helper Input vincula um elemento **HTML &lt;input>** a uma expressão de modelo na sua view razzor. A sintaxe usada é:
+A Tag Helper Input vincula um elemento **HTML < input >** a uma expressão de modelo na sua view razzor. A sintaxe usada é:
 ```
 <Input asp-for="<Nome da expressão>"/>
 ``` 
@@ -726,7 +726,7 @@ Existem 2 opções para usar o template padrão:
 
 - 2- `asp-validation-for`
 
-Anexa as mensagens de erro de validação no campo de entrada da propriedade de modelo especificada. Quando ocorre um erro de validação do lado do usuário, o jQuery exibe a mensagem de erro no elemento &lt;span>.
+Anexa as mensagens de erro de validação no campo de entrada da propriedade de modelo especificada. Quando ocorre um erro de validação do lado do usuário, o jQuery exibe a mensagem de erro no elemento < span >.
 
 ### AntiForgeryToken 
 Evita ataques CSRF (Cross Site Request Forgery).

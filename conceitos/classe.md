@@ -9,8 +9,8 @@ A classe também pode prover muitos outros recursos, tais como:
 - Construtores
 - Sobrecarga
 - Encapsulamento
-- Herança
-- Polimorfismo
+- [Herança](heranca)
+- [Polimorfismo](polimorfismo)
 
 Exemplos:
 - *Entidades*: Produto, Cliente, Triangulo
@@ -100,6 +100,7 @@ Usos comuns:
             _nome = nome;
         }
     ```
+
 ## Propriedades
 
 São definições de métodos encapsulados, porém expondo uma sintaxe similar à de atributos e não de métodos.

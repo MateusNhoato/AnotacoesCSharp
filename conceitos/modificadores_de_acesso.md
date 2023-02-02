@@ -1,5 +1,6 @@
 # Modificadores de acesso
 
+
 |  Modificador | Propriedades  |
 |---|---|
 |  `public` | Pode ser acessado pela própria classe, subclasses no assembly, classes do assembly, subclasses fora do assembly e classes fora do assembly.  |
@@ -11,7 +12,7 @@
 
 
 
-## Modificadores de Acesso em Classes
+## Modificadores de Acesso em [Classes](classe)
 
 Acesso por qualquer classe 
 - `public` class Product

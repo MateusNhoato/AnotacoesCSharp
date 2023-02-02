@@ -1,4 +1,5 @@
 # Expressão Condicional Ternária
+
 Estrututra opcional ao if-else quando se deseja decidir um valor com base em uma condição.
 
 Sintaxe:
