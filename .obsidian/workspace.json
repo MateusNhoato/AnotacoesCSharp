@@ -4,22 +4,35 @@
     "type": "split",
     "children": [
       {
-        "id": "f9b2c3884b855bf7",
+        "id": "87ca9e31436e37da",
         "type": "tabs",
         "children": [
           {
-            "id": "7ba3c451194369fb",
+            "id": "869816627506dba9",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "linq.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "486fef0ac46a5384",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "linq.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
+                "file": "linq.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "README.md",
+                "file": "linq.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md"
+                "file": "linq.md"
               }
             }
           }
@@ -146,17 +159,17 @@
       "command-palette:Abrir paleta de comandos": false
     }
   },
-  "active": "7ba3c451194369fb",
+  "active": "486fef0ac46a5384",
   "lastOpenFiles": [
-    "linq.md",
     "aplicacao_web_mvc.md",
+    "linq.md",
+    "README.md",
     "conceitos/variaveis.md",
     "conceitos/polimorfismo.md",
     "conceitos/nullable.md",
     "conceitos/namespace.md",
     "conceitos/modificadores_de_acesso.md",
     "conceitos/modificador_de_parametros.md",
-    "conceitos/lambda.md",
-    "conceitos/interface.md"
+    "conceitos/lambda.md"
   ]
 }

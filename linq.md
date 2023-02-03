@@ -16,6 +16,7 @@
     - [Conjunto](#conjunto)
     - [Ordenação](#ordenação)
     - [Agregação](#agregação)
+    - [Quantificação](#quantificação)
 - [Créditos](#créditos)
 
 ---
@@ -1087,6 +1088,132 @@ Saída:
 ```
 Nomes: Maria, João, Robson, Tatiane
 ```
+
+### Quantificação
+
+Os operadores de quantificação são usados em uma fonte de dados quando queremos verificar se alguns ou todos os elementos atendem a uma condição ou não. Eles retornam um **valor booleano (true ou false)**, que indica se alguns ou todos os elementos na fonte de dados satisfazem a condição.
+
+Métodos:
+
+1. `All`
+```
+Retorna true se cada elemento da sequência passar no teste especificado do predicate ou se a sequência estiver vazia. Caso contrário retorna false.
+```
+
+2. `Any`
+```
+Determina se existe pelo um objeto na sequência. Se passado uma condição, verifica se existe algum objeto que atende a condição.
+```
+
+3. `Contains`
+```
+Determina se a fonte de dados contém um elemento especificado.
+
+Atenção! Quando se trata de objetos complexos o método Contains vê se a referência é a mesma, ele não checka os valores dos atributos.
+```
+
+##### Exemplos
+
+`All`
+```cs
+ int[] numeros = { 1, 2, 3, 4, 5, 10 };
+
+// Sintaxe de Consulta
+   var resultado = (from num in numeros
+                  select num).All(n => n % 2 == 0);
+
+// Sintaxe de Método
+ var resultado = numeros.All(n => n % 2 == 0);
+
+Console.WriteLine(resultado);
+
+// Consulta com objetos complexos
+List<Funcionario> funcionarios = new()
+{
+	new Funcionario() {Nome = "Maria", Idade = 36, Salario = 3850.00m},
+	new Funcionario() {Nome = "Manoel", Idade = 33, Salario = 2490.00m},
+	new Funcionario() {Nome = "Amanda", Idade = 21, Salario = 6257.50m}
+};
+
+var todosSalariosAcima2500 = funcionarios.All(f => f.Salario > 2500.00m);
+var todosMaioresQue18Anos - funcionarios.All(f => f.Idade > 18);
+var todosNomesContemLetraA = funcionarios.All(f => f.Nome.Contains('a'));
+
+Console.WriteLine(todosSalariosAcima2500);
+Console.WriteLine(todosMaioresQue18Anos);
+Console.WriteLine(todosNomesContemLetraA);
+```
+
+Saída:
+```
+False
+False
+True
+True
+```
+
+`Any`
+```cs
+string[] cursos = { "C#", "Java", "Python", "PHP", "Go", "Node" };
+
+// Sintaxe de Consulta
+var resultado = (from c in cursos
+				select c).Any();
+
+// Sintaxe de Método
+var resultado = cursos.Any();
+
+Console.WriteLine(resultado);
+
+// Consulta com condição
+var resultado2 = cursos.Any(c => c.StartsWith('G'));
+
+Console.WriteLine(resultado2);
+
+// Consulta com objeto complexo e condição
+List<Cachorro> cachorros = new()
+{
+	new Cachorro() { Nome = "Bilu", Idade = 6, Vacinado = true},
+	new Cachorro() { Nome = "Bilu", Idade = 3, Vacinado = false},
+	new Cachorro() { Nome = "Bilu", Idade = 8, Vacinado = true}	
+};
+
+bool naoVacinados = cachorros.Any( c => c.Idade > 2 && c.Vacinado == false);
+
+Console.WriteLine(naoVacinados);
+```
+
+Saída:
+```
+True
+True
+True
+```
+
+`Contains`
+```cs
+int[] numeros = { 3, 6, 80, 124, 436, 82, 51, 73, 10 };
+
+// Sintaxe de Consulta
+var resultado = (from num in numeros
+                select num).Contains(124);
+
+// Sintaxe de Método
+var resultado = numeros.Contains(124);
+
+Console.WriteLine(resultado);
+```
+
+Saída:
+```
+True
+True
+```
+
+==Para objetos complexos o Contains verifica apenas a referência, não os valores do objeto.==
+
+
+
 
 
 ## Créditos
