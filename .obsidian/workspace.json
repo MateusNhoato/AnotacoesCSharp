@@ -18,21 +18,8 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "486fef0ac46a5384",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "linq.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -159,17 +146,17 @@
       "command-palette:Abrir paleta de comandos": false
     }
   },
-  "active": "486fef0ac46a5384",
+  "active": "869816627506dba9",
   "lastOpenFiles": [
-    "aplicacao_web_mvc.md",
+    "conceitos/classe.md",
+    "conceitos/heranca.md",
     "linq.md",
-    "README.md",
-    "conceitos/variaveis.md",
     "conceitos/polimorfismo.md",
     "conceitos/nullable.md",
     "conceitos/namespace.md",
     "conceitos/modificadores_de_acesso.md",
-    "conceitos/modificador_de_parametros.md",
-    "conceitos/lambda.md"
+    "conceitos/condicional_ternaria.md",
+    "aplicacao_web_mvc.md",
+    "README.md"
   ]
 }

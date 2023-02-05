@@ -20,7 +20,7 @@ Exemplos:
 
 *Outros*: views, repositórios, gerenciadores, etc
 
-**`Toda Classe em C# é uma subclasse da classe Object`**
+## **`Toda Classe em C# é uma subclasse da classe Object`**
 
 Object possui os seguintes métodos:
 - GetType - retorna o tipo do objeto

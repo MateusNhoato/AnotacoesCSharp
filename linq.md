@@ -17,6 +17,8 @@
     - [Ordenação](#ordenação)
     - [Agregação](#agregação)
     - [Quantificação](#quantificação)
+    - [Agrupamento](#agrupamento)
+    - [Junção](#junção)
 - [Créditos](#créditos)
 
 ---
@@ -1212,7 +1214,523 @@ True
 
 ==Para objetos complexos o Contains verifica apenas a referência, não os valores do objeto.==
 
+### Agrupamento
 
+Os operadores de agrupamento têm a mesma função da cláusula *GROUP BY* da SQL. Eles criam um grupo de elementos com base na chave fornecida. Esse grupo está contido em um tipo especial de coleçãop que implementa a interface *IGrouping< TKey, TSource>* em que *Tkey* é uma chave no qual o grupo foi formado e *TSource* é a coleção de elementos que corresponde ao valor de chave de agrupamento.
+
+O agrupamento é um dos recursos mais poderosos da LINQ, e podemos agrupar dados das seguintes formas:
+- Usando uma única propriedade
+- Pela primeira letra de uma propriedade
+- Usando um intervalo numérico calculado
+- Usando um predicado booleano ou outra expressão
+- Usando uma chave composta
+
+No agrupamento podemos obter os elementos individuais, pois é criada uma sequência de grupos e eses grupos implementam IGrouping< TKey,T>, onde *TKey* é o atributo usado para fazer o agrupamento e *T* representa a entidade original.
+
+Métodos de Agrupamento:
+
+1. `GroupBy`
+```
+Retorna grupos de elementos com base no valor de uma chave onde cada grupo é representado pelo objeto IGrouping<TKey,TElement>.
+```
+
+2. `ToLookUp`
+```
+Atua da mesma forma que GroupBy, a única diferença é que a execução de GroupBy é adiada (deferida), enquanto a execução de ToLookUp é imediata.
+```
+
+##### Exemplos
+
+`GroupBy`
+```cs
+class Aluno
+{
+    public int AlunoId;
+    public string Nome;
+    public string Curso;
+    public int Idade;
+}
+
+List<Aluno> alunos = new List<Aluno>()
+    {
+        new Aluno() {AlunoId= 1, Curso = "Física", Nome = "Vitor", Idade = 18},
+        new Aluno() {AlunoId= 2, Curso = "História", Nome = "Jorge", Idade = 21},
+        new Aluno() {AlunoId= 3, Curso = "Quimica", Nome = "Bianca", Idade = 18},
+        new Aluno() {AlunoId= 4, Curso = "Física", Nome = "Amanda", Idade = 21},
+    };
+
+// Sintaxe de Consulta
+var gruposIdade = from aluno in alunos group aluno by aluno.Idade;
+
+// Sintaxe de Método
+var gruposIdade = alunos.GroupBy(a => a.Idade);
+
+// itera os grupos
+foreach(var grupo in gruposIdade)
+{
+    Console.WriteLine(grupo.Key + ": " + grupo.Count());
+    // itera os alunos no grupo
+    foreach(var aluno in grupo)
+	{
+        Console.WriteLine($"{aluno.Nome} - {aluno.Idade}");
+    }
+}
+
+// Consulta mais complexa, agrupando por curso e depois usando o OrderBy
+// para ordenar os grupos em ordem alfabética
+var gruposCursos = alunos.GroupBy(a => a.Curso)
+            .OrderBy(g => g.Key);
+```
+
+Saída:
+```
+18: 2
+Vitor - 18
+Bianca - 18
+21: 2
+Jorge - 21
+Amanda - 2
+Física: 2
+Vitor - 18
+Amanda - 21
+História: 1
+Jorge - 21
+Quimica: 1
+Bianca - 18
+```
+
+`GroupBy` com múltiplas chaves
+```cs
+List<Aluno> alunos = new List<Aluno>()
+     {
+        new Aluno() {AlunoId= 1, Curso = "Física", Nome = "Vitor", Idade = 18},
+        new Aluno() {AlunoId= 2, Curso = "História", Nome = "Jorge", Idade = 21},
+        new Aluno() {AlunoId= 3, Curso = "Química", Nome = "Bianca", Idade = 18},
+        new Aluno() {AlunoId= 4, Curso = "Física", Nome = "Amanda", Idade = 21},
+        new Aluno() {AlunoId= 4, Curso = "Física", Nome = "Carol", Idade = 21},
+        new Aluno() {AlunoId= 4, Curso = "Física", Nome = "Roberto", Idade = 18},
+        new Aluno() {AlunoId= 4, Curso = "História", Nome = "Marcos", Idade = 21},
+        new Aluno() {AlunoId= 4, Curso = "Química", Nome = "Amanda", Idade = 18},
+    };
+
+var grupos = alunos.GroupBy(x => new { x.Curso, x.Idade })
+		            .OrderByDescending(g => g.Key.Curso);
+
+
+foreach (var grupo in grupos)
+    {
+        Console.WriteLine(grupo.Key + ": " + grupo.Count());
+        foreach(var aluno in grupo)
+        {
+            Console.WriteLine($"{aluno.Nome} - {aluno.Idade}");
+        }
+    }
+```
+
+Saída:
+```
+{ Curso = Química, Idade = 18 }: 2
+Bianca - 18
+Amanda - 18
+{ Curso = História, Idade = 21 }: 2
+Jorge - 21
+Marcos - 21
+{ Curso = Física, Idade = 18 }: 2
+Vitor - 18
+Roberto - 18
+{ Curso = Física, Idade = 21 }: 2
+Amanda - 21
+Carol - 21
+```
+
+
+==Nota: Quando realizamos o agrupamento usando múltiplas chaves usando GroupBy, os dados retornados são um tipo anônimo.==
+
+### Junção
+
+As operações de junção são usadas para buscar dados de duas ou mais fontes de dados com base em algumas propriedades comuns presentes nestas fontes.
+
+Podemos realizar diferentes tipos de junções como: **Inner Join, Right Join, Left Join, Full Join e Cross Join** na LINQ.
+
+![Linq-Junção](img/linq4.png)
+Uma cláusula join recebe duas sequências de origem como entrada. Os elementos em cada sequência devem ser ou conter uma propriedade que possa ser comparada com uma propriedade correspondente na outra sequência. A cláusula join compara a igualdade das chaves especificadas usando a palavra-chave equals. Logo, todas as junções realizadas pela cláusula join são junções por igualdade.
+
+A forma de saída depende do tipo de junção que estamos realizando(inner,left,etc.)
+
+- **Inner Join**
+
+Uma inner join ou junção interna produz um conjunto de resultados no qual cada elemento da primeira coleção aparece uma vez para cada elemento correspondente na segudna coleção. Se um elemento na primeira coleção não tiver nenhum elemento correspondente na segunda coleção, ele não aparecerá no conjunto de resultados. ==A junção interna retorna apenas os registros ou linhas que correspondem ou existem em **ambas** as coleções/sequências.==
+
+- **Left Join**
+
+Um left join ou junção à esquerda é uma junção na qual cada item da primeira fonte de dados será retornado independentemente de ter ou não dados correlacionados presentes na segunda fonte de dados. ==Logo, um left join retorna todos os registros da tabela à esquerda e os registros correspondentes da tabela à direita. Se não houver colunas correspondentes na tabela correta, ele retornará valores null==.
+
+Se quisermos fazer uma junção left join na LINQ, devemos usar a palavra-chave "into" e o método "DefaultEmpty".
+
+- **Right Join**
+
+Um right join ou junção à direita retorna todas as linhas da tabela no lado direito da junção e as linhas correspondente da tabela no lado esquerdo da junção. Para as linhas que não encontram linha correspondente no lado esquerdo, o conjunto de resultados conterá null.
+
+A LINQ não suporta um right join. Para contornar essa limitação, podemos trocar as tabelas e fazer um left join, assim teremos o comportamento esperado para o right join.
+
+- **Full Join**
+
+Um full join ou junção externa completa é uma união lógica de uma junção externa à esquerda e uma junção externa à direita ( left join + right join). 
+
+Podemos juntar um left e right join e usar o método *Union* para encontrar os elementos exclusivos entre duas sequências ou coleções. O método Union é um método de extensão usado para mesclar duas coleções sendo que a coleção mesclada contém apenas os elementos distintos de ambas as coleções.
+
+- **Cross Join** (Produto cartesiano)
+Uma cross join ou junção cruzada também é conhecida como um produto cartesiano. Faz a junção de duas coleções para obter uma nova coleção onde cada par combinado está representado.
+
+Esta associação não requer nenhuma condição na junção, mas a LINQ não permite o uso da palavra-chave "join" sem nenhuma condição. Logo, temos que usar duas cláusulas *from*, uma para cada coleção, para assim poder fazer uma junção cruzada e, então, usar a cláusula *select* para fazer uma projeção do resultado.
+
+
+#### Métodos:
+
+1. `Join`
+```
+É usado para unir duas fontes de dados ou coleções com base na propriedade comum e retornar os dados como um único conjunto de resultados.
+
+Temos duas sobrecargas para este método.
+
+Primeira:
+```
+```cs
+Join<TOuter,TInner,Tkey,TResult>(Ienumrable<TOuter>, IEnumerable<TInner>,  Func<TOuter,TKey>, Func<TInner,TKey>, Func<TOuter,TInner,TResult>)
+
+```
+```
+TOuter - O tipo dos elementos da primeira sequência.
+TInner - O tipo dos elementos da segunda sequência.
+TKey - O tipo das chaves retornadas pelas funções do seletor de chaves
+	- Outer Key - chave comum na fonte de dados da primeira sequência
+	- Inner Key - chave comum na fonte de dados da segunda sequência
+TResult - O tipo dos elementos de resultado.
+
+Para utilizar a segunda sobrecarga adicionamos um IEqualityComparer<T> como parâmetro, para hash e comparar a chaves. 
+```
+
+2. `GroupJoin`
+```
+É usado para unir duas fontes de dados ou coleções com base em uma chave ou propriedade comum, mas retorna um resultado em grupo com base na chave de grupo especificada.
+```
+
+##### Exemplos:
+
+`Join` - Inner
+```cs
+class Aluno
+{
+    public int AlunoId { get; set; }
+    public string Nome { get; set; }
+    public int? CursoId { get; set; }
+    public int Idade { get; set; }
+}
+
+class Curso
+{
+    public int CursoId { get; set; }
+    public string Nome { get; set; }
+}
+
+// Coleção 1
+ List<Aluno> alunos = new List<Aluno>()
+        {
+            new Aluno() {AlunoId= 1, CursoId = 1, Nome = "Vitor", Idade = 18},
+            new Aluno() {AlunoId= 2, CursoId = 2, Nome = "Jorge", Idade = 21},
+            new Aluno() {AlunoId= 3, CursoId = 3, Nome = "Bianca", Idade = 18},
+            new Aluno() {AlunoId= 4, CursoId = null, Nome = "Amanda", Idade = 21},
+            new Aluno() {AlunoId= 5, CursoId = 1, Nome = "Carol", Idade = 21},
+            new Aluno() {AlunoId= 6, CursoId = 1, Nome = "Roberto", Idade = 18},
+            new Aluno() {AlunoId= 7, CursoId = 2, Nome = "Marcos", Idade = 21},
+            new Aluno() {AlunoId= 8, CursoId = 3, Nome = "Amanda", Idade = 18},
+        };
+
+// Coleção 2
+List<Curso> cursos = new List<Curso>()
+{
+    new Curso() {CursoId = 1, Nome = "Física"},
+    new Curso() {CursoId = 2, Nome = "História"},
+    new Curso() {CursoId = 3, Nome = "Química"},
+    new Curso() {CursoId = 4, Nome = "Letras"}
+};
+
+// Sintaxe de Consulta
+ var alunosCurso = (from aluno in alunos
+                    join curso in cursos
+                    on aluno.CursoId equals curso.CursoId
+                    select new
+		            {
+		                AlunoNome = aluno.Nome,
+		                AlunoId = aluno.AlunoId,
+		                CursoNome = curso.Nome,
+		                AlunoIdade = aluno.Idade
+		            });
+
+
+// Sintaxe de Método
+// Consulta utilizando a chave CursoId (comum nas 2 coleções)
+var alunosCurso = alunos // Outer Data Source
+				.Join(cursos, // Inner Data Source
+			    aluno => aluno.CursoId, // Inner Key Selector
+			    curso => curso.CursoId, // Outer Key selector
+			    (aluno, curso) => new
+			    {    
+	                AlunoNome = aluno.Nome,
+	                AlunoId = aluno.AlunoId,
+	                CursoNome = curso.Nome,
+	                AlunoIdade = aluno.Idade
+		       });
+
+foreach(var alunoCurso in alunosCurso)
+{
+    Console.Write($"Aluno: {alunoCurso.AlunoNome} | ");
+    Console.Write($"Id: {alunoCurso.AlunoId} | ");
+    Console.Write($"Idade: {alunoCurso.AlunoIdade} | ");
+    Console.WriteLine($"Curso: {alunoCurso.CursoNome}");
+}
+```
+
+Saída:
+```
+Aluno: Vitor | Id: 1 | Idade: 18 | Curso: Física
+Aluno: Jorge | Id: 2 | Idade: 21 | Curso: História
+Aluno: Bianca | Id: 3 | Idade: 18 | Curso: Química
+Aluno: Carol | Id: 5 | Idade: 21 | Curso: Física
+Aluno: Roberto | Id: 6 | Idade: 18 | Curso: Física
+Aluno: Marcos | Id: 7 | Idade: 21 | Curso: História
+Aluno: Amanda | Id: 8 | Idade: 18 | Curso: Química
+```
+
+==Nota: A aluna de Id 4, Amanda, não aparece na coleção de resultados pois o curso dela é "null".==
+
+Obs: nos próximos exemplos usaremos as mesmas coleções como exemplo.
+
+
+`Join` - Left 
+```cs
+
+// adicionamos mais uma consulta após ligar as coleções
+// nesta consulta usamos .DefaultIfEmpty() para pegar os valores vazios ou nulos também
+ var leftJoin = (from a in alunos
+                        join c in cursos
+                        on a.CursoId equals c.CursoId
+                        into alunoCursoGrupo
+                        from curso in alunoCursoGrupo.DefaultIfEmpty()
+                        select new
+                        {
+                            Nome = a.Nome,
+                            Id = a.AlunoId,                          
+                            Curso = (curso != null) ? curso.Nome : "Sem Curso",
+                            Idade = a.Idade
+                        });
+
+foreach(var alunoCurso in leftJoin)
+        {
+            Console.Write($"Aluno: {alunoCurso.Nome} | ");
+            Console.Write($"Id: {alunoCurso.Id} | ");
+            Console.Write($"Idade: {alunoCurso.Idade} | ");
+            Console.WriteLine($"Curso: {alunoCurso.Curso}");
+        }
+```
+
+Saída:
+```
+Aluno: Vitor | Id: 1 | Idade: 18 | Curso: Física
+Aluno: Jorge | Id: 2 | Idade: 21 | Curso: História
+Aluno: Bianca | Id: 3 | Idade: 18 | Curso: Química
+Aluno: Amanda | Id: 4 | Idade: 21 | Curso: Sem Curso
+Aluno: Carol | Id: 5 | Idade: 21 | Curso: Física
+Aluno: Roberto | Id: 6 | Idade: 18 | Curso: Física
+Aluno: Marcos | Id: 7 | Idade: 21 | Curso: História
+Aluno: Amanda | Id: 8 | Idade: 18 | Curso: Química
+```
+
+`Join`  - Right
+```cs
+ var rightJoin = (from c in cursos
+                join a in alunos
+                on c.CursoId equals a.CursoId
+                into cursoAlunoGrupo
+                from aluno in cursoAlunoGrupo.DefaultIfEmpty()
+                select new
+                {                            
+                    NomeAluno = (aluno != null) ? aluno.Nome : "Sem Aluno",
+                    AlunoIdade = (aluno != null) ?  aluno.Idade: 0,
+                    AlunoId = (aluno != null) ? aluno.AlunoId : 0,
+                    Curso = c.Nome
+                });
+
+
+foreach (var cursoAluno in rightJoin)
+{
+    Console.Write($"Curso: {cursoAluno.Curso} | ");
+    Console.Write($"Aluno: {cursoAluno.NomeAluno} | ");
+    Console.Write($"Id: {cursoAluno.AlunoId} | ");
+    Console.WriteLine($"Idade: {cursoAluno.AlunoIdade}");
+}
+```
+
+Saída
+```
+Curso: Física | Aluno: Vitor | Id: 1 | Idade: 18 
+Curso: Física | Aluno: Carol | Id: 5 | Idade: 21 
+Curso: Física | Aluno: Roberto | Id: 6 | Idade: 18 
+Curso: História | Aluno: Jorge | Id: 2 | Idade: 21 
+Curso: História | Aluno: Marcos | Id: 7 | Idade: 21 
+Curso: Química | Aluno: Bianca | Id: 3 | Idade: 18 
+Curso: Química | Aluno: Amanda | Id: 8 | Idade: 18 
+Curso: Letras | Aluno: Sem Aluno  | Id: 0 | Idade: 0 
+```
+
+`Join` - FullJoin
+```cs
+var leftJoin = (from a in alunos
+                join c in cursos
+                on a.CursoId equals c.CursoId
+                into alunoCursoGrupo
+                from curso in alunoCursoGrupo.DefaultIfEmpty()
+                select new
+                {
+                    a.Nome,
+                    Id = a.AlunoId,
+                    Curso = (curso != null) ? curso.Nome : "Sem Curso",
+                    a.Idade
+                });
+
+
+var rightJoin = (from c in cursos
+                join a in alunos
+                on c.CursoId equals a.CursoId
+                into cursoAlunoGrupo
+                from aluno in cursoAlunoGrupo.DefaultIfEmpty()
+                select new
+                {                            
+                    Nome = (aluno != null) ? aluno.Nome : "Sem Aluno",
+                    Id = (aluno != null) ? aluno.AlunoId : 0,                                                    
+                    Curso = c.Nome,
+                    Idade = (aluno != null) ? aluno.Idade : 0
+                });
+
+// fazendo um full join (juntando o right join com o left join) e usando o groupby
+// para melhor visualização no final
+
+var fullJoin = rightJoin.Union(leftJoin)
+            .GroupBy(a => a.Curso);
+
+foreach (var grupo in fullJoin)
+    {
+        Console.WriteLine($"{grupo.Key}");
+        foreach(var aluno in grupo)
+        {
+            Console.Write($"Aluno: {aluno.Nome} | ");
+            Console.Write($"Id: {aluno.Id} | ");
+            Console.WriteLine($"Idade: {aluno.Idade}");
+        }
+        Console.WriteLine(); // espaçamento entre os cursos
+    }
+```
+
+Saída:
+```
+Física
+Aluno: Vitor | Id: 1 | Idade: 18
+Aluno: Carol | Id: 5 | Idade: 21
+Aluno: Roberto | Id: 6 | Idade: 18
+
+História
+Aluno: Jorge | Id: 2 | Idade: 21
+Aluno: Marcos | Id: 7 | Idade: 21
+
+Química
+Aluno: Bianca | Id: 3 | Idade: 18
+Aluno: Amanda | Id: 8 | Idade: 18
+
+Letras
+Aluno: Sem Aluno | Id: 0 | Idade: 0
+
+Sem Curso
+Aluno: Amanda | Id: 4 | Idade: 21
+```
+
+Saída:
+```
+Aluno: Vitor | Id: 1 | Idade: 18 | Curso: Física
+Aluno: Vitor | Id: 1 | Idade: 18 | Curso: História
+Aluno: Vitor | Id: 1 | Idade: 18 | Curso: Química
+Aluno: Vitor | Id: 1 | Idade: 18 | Curso: Letras
+Aluno: Jorge | Id: 2 | Idade: 21 | Curso: Física
+Aluno: Jorge | Id: 2 | Idade: 21 | Curso: História
+Aluno: Jorge | Id: 2 | Idade: 21 | Curso: Química
+Aluno: Jorge | Id: 2 | Idade: 21 | Curso: Letras
+Aluno: Bianca | Id: 3 | Idade: 18 | Curso: Física
+Aluno: Bianca | Id: 3 | Idade: 18 | Curso: História
+Aluno: Bianca | Id: 3 | Idade: 18 | Curso: Química
+Aluno: Bianca | Id: 3 | Idade: 18 | Curso: Letras
+Aluno: Amanda | Id: 4 | Idade: 21 | Curso: Física
+Aluno: Amanda | Id: 4 | Idade: 21 | Curso: História
+Aluno: Amanda | Id: 4 | Idade: 21 | Curso: Química
+Aluno: Amanda | Id: 4 | Idade: 21 | Curso: Letras
+Aluno: Carol | Id: 5 | Idade: 21 | Curso: Física
+Aluno: Carol | Id: 5 | Idade: 21 | Curso: História
+Aluno: Carol | Id: 5 | Idade: 21 | Curso: Química
+Aluno: Carol | Id: 5 | Idade: 21 | Curso: Letras
+Aluno: Roberto | Id: 6 | Idade: 18 | Curso: Física
+Aluno: Roberto | Id: 6 | Idade: 18 | Curso: História
+Aluno: Roberto | Id: 6 | Idade: 18 | Curso: Química
+Aluno: Roberto | Id: 6 | Idade: 18 | Curso: Letras
+Aluno: Marcos | Id: 7 | Idade: 21 | Curso: Física
+Aluno: Marcos | Id: 7 | Idade: 21 | Curso: História
+Aluno: Marcos | Id: 7 | Idade: 21 | Curso: Química
+Aluno: Marcos | Id: 7 | Idade: 21 | Curso: Letras
+Aluno: Amanda | Id: 8 | Idade: 18 | Curso: Física
+Aluno: Amanda | Id: 8 | Idade: 18 | Curso: História
+Aluno: Amanda | Id: 8 | Idade: 18 | Curso: Química
+Aluno: Amanda | Id: 8 | Idade: 18 | Curso: Letras
+```
+
+`GroupJoin`
+```cs
+// agrupando por curso
+var groupJoin = cursos.GroupJoin(alunos,
+		        c => c.CursoId, a => a.CursoId,
+		        (c, alunosGrupo) => new
+	            {
+	                Alunos = alunosGrupo,
+	                Curso = c.Nome 
+	            });
+
+  
+foreach(var grupo in groupJoin)
+    {
+	    Console.WriteLine(grupo.Curso);
+        foreach(var aluno in grupo.Alunos)
+            {
+                Console.Write($"Aluno: {aluno.Nome} | ");
+                Console.Write($"Id: {aluno.AlunoId} | ");
+                Console.WriteLine($"Idade: {aluno.Idade}");
+            }
+        Console.WriteLine();
+    }
+```
+
+Saída:
+```
+Física
+Aluno: Vitor | Id: 1 | Idade: 18
+Aluno: Carol | Id: 5 | Idade: 21
+Aluno: Roberto | Id: 6 | Idade: 18
+
+História
+Aluno: Jorge | Id: 2 | Idade: 21
+Aluno: Marcos | Id: 7 | Idade: 21
+
+Química
+Aluno: Bianca | Id: 3 | Idade: 18
+Aluno: Amanda | Id: 8 | Idade: 18
+
+Letras
+```
 
 
 
