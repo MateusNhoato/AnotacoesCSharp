@@ -8,12 +8,12 @@
         "type": "tabs",
         "children": [
           {
-            "id": "869816627506dba9",
+            "id": "fde674f14a6edbb6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "linq.md",
+                "file": "conceitos/ienumerable_e_list.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "linq.md",
+                "file": "conceitos/ienumerable_e_list.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "linq.md",
+                "file": "conceitos/ienumerable_e_list.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "linq.md"
+                "file": "conceitos/ienumerable_e_list.md"
               }
             }
           }
@@ -146,17 +146,17 @@
       "command-palette:Abrir paleta de comandos": false
     }
   },
-  "active": "869816627506dba9",
+  "active": "fde674f14a6edbb6",
   "lastOpenFiles": [
-    "front.md",
+    "conceitos/ienumerable_e_iqueryable.md",
+    "conceitos/ienumerable_e_list.md",
     "linq.md",
+    "conceitos/interface.md",
+    "conceitos/estruturas_de_dados.md",
+    "conceitos/recursao.md",
+    "front.md",
     "conceitos/nullable.md",
     "conceitos/variaveis.md",
-    "conceitos/polimorfismo.md",
-    "conceitos/namespace.md",
-    "conceitos/modificadores_de_acesso.md",
-    "conceitos/modificador_de_parametros.md",
-    "conceitos/lambda.md",
-    "conceitos/interface.md"
+    "conceitos/polimorfismo.md"
   ]
 }

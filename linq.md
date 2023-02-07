@@ -35,19 +35,17 @@
 A LINQ fornece uma experiência de consulta consistente para consultar objetos, bancos de dados relacionais, xml, entidades e outras fontes de dados. Além disso, possui uma sintaxe de consulta estruturada usando C#.
 
 ![Linq](img/linq1.png)
-==As consultas LINQ retornam resultados como objetos.==
 
 ![Linq](img/linq2.png)
- Logo, permite usar uma abordagem orientada a objetos no conjunto de resultados sem se preocupar em transformar diferentes formatos de resultados em objetos.
+ ==As consultas LINQ retornam resultados como objetos.== Logo, permite usar uma abordagem orientada a objetos no conjunto de resultados sem se preocupar em transformar diferentes formatos de resultados em objetos.
 
- 
 ## Retornos da LINQ
 
 As consultas LINQ usam métodos de extensão para classes que implementam as [interfaces](conceitos/interface.md) **IEnumerable** ou **IQueryable**.
 
-**Enumerable** e **Queryable** são duas classes estáticas que contêm métodos de extensão para escrever consultas LINQ.
+[Enumerable e Queryable](conceitos/ienumerable_e_iqueryable.md)  são duas classes estáticas que contêm métodos de extensão para escrever consultas LINQ.
 
-Isso significa que podemos chamar os métodos LINQ em qualquer objeto que implemente **IEnumerable< T >** e **IQueryable < T >** . Podemos criar classes que implementam essas interfaces, que vão 'herdar' todas as funcionalidades da LINQ.
+Isso significa que podemos chamar os métodos LINQ em qualquer objeto que implemente **IEnumerable< T >** e **IQueryable < T >**. Podemos criar classes que implementam essas interfaces, que vão 'herdar' todas as funcionalidades da LINQ.
 
 ### IEnumerable< T >
 
@@ -55,15 +53,18 @@ Isso significa que podemos chamar os métodos LINQ em qualquer objeto que implem
 Uma classe que implementa IEnumerable< T > pode ser pensada e usada como uma sequência de elementos.
 
 **Os métodos da link que retornam sequências são todas sequências do tipo `IEnumerable<T>`**. Para transformar estas sequências em listas ou arrays, a LINQ fornece dois métodos de conversão:
+
 1. **ToList()** - converte um IEnumerable< T> para um List< T >
 2. **ToArray()** - converte um IEnumerable< T > para um Array< T >
 
+Nota: [diferenças de IEnumerable para List](conceitos/ienumerable_e_list)
+
 ## Vantages da LINQ
 
-- Fornece uam sintaxe de consulta comum para consultar diferentes fontes de dados.
+- Fornece uma sintaxe de consulta comum para consultar diferentes fontes de dados.
 - Utiliza menos código em comparação com a abordagem tradicional de consulta.
 - Fornece verificação de erros em tempo de compilação, bem como suporte de inteligência no Visual Studio, evitando erros em tempo de execução.
-- Fornece muitos métodos embutiods que podemos usar para realizar diferentes operações, como filtragem, ordenação, agrupamento, etc.
+- Fornece muitos métodos embutidos que podemos usar para realizar diferentes operações, como filtragem, ordenação, agrupamento, etc.
 - Permite a reutilização de consultas.
 
 ## Desvantagens da LINQ
@@ -77,8 +78,6 @@ Uma classe que implementa IEnumerable< T > pode ser pensada e usada como uma seq
 
 ## Consulta
 
-Os métodos LINQ que retornam IEnumerable< T > têm um conceito de **execução lenta** (também chamada de adiada ou lazy execution).
-
 ==Todos os métodos genéricos LINQ podem **inferir implicitamente argumentos de tipo**, portanto não precisamos especificá-los  (na maioria dos casos usamos *var*).==
 
 A maioria dos métodos LINQ aceita [delegates](conceitos/delegates.md) Func<> e Predicate<>. A opção mais comum para fornecer um delegate é escrever uma [**expressão lambda**](conceitos/lambda.md).
@@ -87,7 +86,7 @@ Ao trabalhar com a interface IQueryable< T >, a consulta é compilada (em SQL, p
 
 ### Execução Imediata na LINQ
 
-O padrão da LINQ é somente fazer a consulta quando é necessário, para forçar a consulta LINQ a ser executada e a retornar o resultado imediatamente, é necessário usar os operadores de conversão:
+Os métodos LINQ que retornam IEnumerable< T > têm um conceito de **execução lenta** (também chamada de adiada ou lazy execution). Para forçar a consulta LINQ a ser executada e a retornar o resultado imediatamente, é necessário usar os operadores de conversão:
 
 - ToList()
 - ToArray()
@@ -110,6 +109,7 @@ FROM objeto in FonteDeDados
 Where condicao
 Select objeto
 ```
+
 1. Inicialização: iniciamos com alguma fonte de dados para consultar usando a palavra-chave, ou cláusula, `FROM`.
 2. Condição: Usamos operadores de consulta para adicionar **condições** para a consulta, começando com a palavra-chave `Where`.
 3. Seleção: Agrupamos ou selecionamos os objetos que queremos, usando a palavra-chave `Select`, ou podemos usar `GroupBy`.
@@ -129,9 +129,10 @@ var resultado = from f in frutas      // inicializando com a cláusula from
 
 Console.WriteLine(string.Join(", ", resultado));
 ```
+
 Saída no console:
 ```
-Pera, Laranja
+Laranja, Pera
 ```
 
 
@@ -159,12 +160,13 @@ Console.WriteLine(string.Join(", ", resultado));
 ```
 Saída no console:
 ```
-Pera, Laranja
+Laranja, Pera
 ```
 
 *==Obs*: O compilador converte a sintaxe de consulta em sintaxe de método em tempo de compilação.==
 
 ### `Tipos de consulta`
+
 ![Linq](img/linq3.png)
 
 ---
@@ -200,7 +202,7 @@ numeros2.Add(64);
 var resultado1 = numeros.Where(n => n < 10);
 
 //  selecionando os números maiores que 1, menores que 20, e excluímos o 4
-var resultado1 = numeros.Where(n => n > 1 && n != 4 && n < 20);
+var resultado2 = numeros.Where(n => n > 1 && n != 4 && n < 20);
 
 // selecionando todos os números da lista numeros menos os que também estão presentes na lista numeros2
 var resultado3 = numeros.Where(n => !numeros2.Contains(n));
@@ -276,23 +278,24 @@ Maria - 18
 Usado para:
 
 1. Selecionar todos os dados no estado original.
-2. Criar um novo formato de dados realiazndo operações nos dados originais.
+2. Criar um novo formato de dados realizando operações nos dados originais.
 
 #### Métodos:
 - `Select`
-    ```
-    Permite especificar quais propriedades queremos recuperar: todas as propriedades ou algumas das propriedades.
+```
+Permite especificar quais propriedades queremos recuperar: todas as propriedades ou algumas das propriedades.
 
-    Permite realizar alguns cálculos.
-    ```
+Permite realizar alguns cálculos.
+```
+
 - `SelectMany`
-    ```
-    É usado para projetar cada elemento de uma sequência para um IEnumerable<T> e, em seguida, nivelar as sequências resultantes em uma sequência.
+ ```
+É usado para projetar cada elemento de uma sequência para um IEnumerable<T> e, em seguida, nivelar as sequências resultantes em uma sequência.
 
-    Combina os registros de uma sequência de resultados e os converte em um resultado.
+Combina os registros de uma sequência de resultados e os converte em um resultado.
 
-    Ele transforma um IEnumerable<IEnumerable<T>> em IEnumerable<T>, ou seja, uma lista de lista para uma lista.
-    ```
+Ele transforma um IEnumerable<IEnumerable<T>> em IEnumerable<T>, ou seja, uma lista de lista para uma lista.
+```
 
 #### **Exemplos com Select**:
 
@@ -519,7 +522,7 @@ Intersect tem uma sobrecarga que aceita um IEqualityComparer<T>.
 
 4. `Union`  ou `UnionBy` - Retorna a união de conjunto, ou seja, os elementos únicos que aparecem em qualquer uma das coleções.
 ```
-É usado para retornar todos os elementos que estão presentes em qualquer uma das fontes de dados. Isso singnifica que ele combina os dados de ambas as fontes de dados e produz um único conjunto de resultados.
+É usado para retornar todos os elementos que estão presentes em qualquer uma das fontes de dados. Isso significa que ele combina os dados de ambas as fontes de dados e produz um único conjunto de resultados.
 
 Union tem uma sobrecarga que aceita um IEqualityComparer<T>.
 ```
@@ -717,11 +720,11 @@ Exemplos de `Intersect`:
 List<int> numeros = new List<int>() { 1, 2, 3, 4, 5, 6};
 List<int> numeros2 = new List<int>() {1, 3, 5, 8, 9, 10};
 
-//Sintaxe de consulta
+//Sintaxe de Consulta
 var resultado = (from num in numeros 
 				select num).Intersect(numeros2).Tolist();
 
-//Sintaxe de método
+//Sintaxe de Método
 var resultado = numeros.Intersect(numeros2).ToList();
 
 foreach(int i in resultado)
@@ -793,7 +796,7 @@ funcionariosDaNoite.Add(new Funcionario()
 							Departamento = "Limpeza"
 						});
 
-// esta consulta irá retornar todos os funcionários da manhã que também tem algum membro de seu departamento na lista defuncionários da noite
+// esta consulta irá retornar todos os funcionários da manhã que também tem algum membro de seu departamento na lista de funcionários da noite
 var funcionariosDoMesmoDepartamento = funcionariosDaManha.IntersectBy(funcionariosDaNoite
 								.Select(f => f.Departamento),
 								 f => f.Departamento);
@@ -833,7 +836,7 @@ Saída:
 1 2 3 4 5 6 7 8 9 10
 ```
 
-Obs: ==não forma incluídos os números repetidos==.
+Obs: ==não foram incluídos os números repetidos==.
 
 ### Ordenação
 
@@ -904,7 +907,7 @@ var lista = (from nome in nomes
 			orderby nome descending
 			select nome).ToList();
 
-//Sintaxe de método
+//Sintaxe de Método
 var lista = nomes.OrderByDescending(nome => nome);
 
 foreach(var item in lista)
@@ -1083,7 +1086,7 @@ C#, Java, Python, PHP, Go
 string resultado = nomes.Aggregate("Nomes: ", (semente, nome) =>
 								   semente += nome + ", ");
 
- //removendo a vírgula a mais do final
+ // Removendo a vírgula a mais do final
 int indice = resultado.LastIndexOf(",");
 resultado = resultado.Remove(indice);
 
@@ -1116,7 +1119,7 @@ Determina se existe pelo um objeto na sequência. Se passado uma condição, ver
 ```
 Determina se a fonte de dados contém um elemento especificado.
 
-Atenção! Quando se trata de objetos complexos o método Contains vê se a referência é a mesma, ele não checka os valores dos atributos.
+Atenção! Quando se trata de objetos complexos o método Contains vê se a referência é a mesma, ele não checa os valores dos atributos.
 ```
 
 ##### Exemplos
@@ -1221,7 +1224,7 @@ True
 
 ### Agrupamento
 
-Os operadores de agrupamento têm a mesma função da cláusula *GROUP BY* da SQL. Eles criam um grupo de elementos com base na chave fornecida. Esse grupo está contido em um tipo especial de coleçãop que implementa a interface *IGrouping< TKey, TSource>* em que *Tkey* é uma chave no qual o grupo foi formado e *TSource* é a coleção de elementos que corresponde ao valor de chave de agrupamento.
+Os operadores de agrupamento têm a mesma função da cláusula *GROUP BY* da SQL. Eles criam um grupo de elementos com base na chave fornecida. Esse grupo está contido em um tipo especial de coleção que implementa a interface *IGrouping< TKey, TSource>* em que *Tkey* é uma chave no qual o grupo foi formado e *TSource* é a coleção de elementos que corresponde ao valor de chave de agrupamento.
 
 O agrupamento é um dos recursos mais poderosos da LINQ, e podemos agrupar dados das seguintes formas:
 - Usando uma única propriedade
@@ -1230,7 +1233,7 @@ O agrupamento é um dos recursos mais poderosos da LINQ, e podemos agrupar dados
 - Usando um predicado booleano ou outra expressão
 - Usando uma chave composta
 
-No agrupamento podemos obter os elementos individuais, pois é criada uma sequência de grupos e eses grupos implementam IGrouping< TKey,T>, onde *TKey* é o atributo usado para fazer o agrupamento e *T* representa a entidade original.
+No agrupamento podemos obter os elementos individuais, pois é criada uma sequência de grupos e estes grupos implementam IGrouping< TKey,T>, onde *TKey* é o atributo usado para fazer o agrupamento e *T* representa a entidade original.
 
 #### Métodos:
 
@@ -1285,6 +1288,16 @@ foreach(var grupo in gruposIdade)
 // para ordenar os grupos em ordem alfabética
 var gruposCursos = alunos.GroupBy(a => a.Curso)
             .OrderBy(g => g.Key);
+
+
+foreach(var grupo in gruposCursos)
+{
+    Console.WriteLine(grupo.Key + ": " + grupo.Count());
+    foreach(var aluno in grupo)
+	{
+        Console.WriteLine($"{aluno.Nome} - {aluno.Idade}");
+    }
+}
 ```
 
 Saída:
@@ -1348,9 +1361,6 @@ Amanda - 21
 Carol - 21
 ```
 
-
-==Nota: Quando realizamos o agrupamento usando múltiplas chaves usando GroupBy, os dados retornados são um tipo anônimo.==
-
 ### Junção
 
 As operações de junção são usadas para buscar dados de duas ou mais fontes de dados com base em algumas propriedades comuns presentes nestas fontes.
@@ -1365,11 +1375,11 @@ A forma de saída depende do tipo de junção que estamos realizando(inner,left,
 
 - **Inner Join**
 
-Uma inner join ou junção interna produz um conjunto de resultados no qual cada elemento da primeira coleção aparece uma vez para cada elemento correspondente na segudna coleção. Se um elemento na primeira coleção não tiver nenhum elemento correspondente na segunda coleção, ele não aparecerá no conjunto de resultados. ==A junção interna retorna apenas os registros ou linhas que correspondem ou existem em **ambas** as coleções/sequências.==
+Uma inner join ou junção interna produz um conjunto de resultados no qual cada elemento da primeira coleção aparece uma vez para cada elemento correspondente na segunda coleção. Se um elemento na primeira coleção não tiver nenhum elemento correspondente na segunda coleção, ele não aparecerá no conjunto de resultados. ==A junção interna retorna apenas os registros ou linhas que correspondem ou existem em **ambas** as coleções/sequências.==
 
 - **Left Join**
 
-Um left join ou junção à esquerda é uma junção na qual cada item da primeira fonte de dados será retornado independentemente de ter ou não dados correlacionados presentes na segunda fonte de dados. ==Logo, um left join retorna todos os registros da tabela à esquerda e os registros correspondentes da tabela à direita. Se não houver colunas correspondentes na tabela correta, ele retornará valores null==.
+Um left join ou junção à esquerda é uma junção na qual cada item da primeira fonte de dados será retornado independentemente de ter ou não dados correlacionados presentes na segunda fonte de dados. ==Logo, um left join retorna todos os registros da tabela à esquerda e os registros correspondentes da tabela à direita. Se não houver colunas correspondentes na tabela secundária, ele retornará valores null==.
 
 Se quisermos fazer uma junção left join na LINQ, devemos usar a palavra-chave "into" e o método "DefaultEmpty".
 
@@ -1462,6 +1472,7 @@ List<Curso> cursos = new List<Curso>()
 };
 
 // Sintaxe de Consulta
+// Consulta utilizando a chave CursoId (comum nas 2 coleções)
  var alunosCurso = (from aluno in alunos
                     join curso in cursos
                     on aluno.CursoId equals curso.CursoId
@@ -1475,7 +1486,6 @@ List<Curso> cursos = new List<Curso>()
 
 
 // Sintaxe de Método
-// Consulta utilizando a chave CursoId (comum nas 2 coleções)
 var alunosCurso = alunos // Outer Data Source
 				.Join(cursos, // Inner Data Source
 			    aluno => aluno.CursoId, // Inner Key Selector
@@ -1515,7 +1525,6 @@ Obs: nos próximos exemplos usaremos as mesmas coleções como exemplo.
 
 `Join` - Left 
 ```cs
-
 // adicionamos mais uma consulta após ligar as coleções
 // nesta consulta usamos .DefaultIfEmpty() para pegar os valores vazios ou nulos também
  var leftJoin = (from a in alunos
@@ -2457,6 +2466,389 @@ Tipo: EmptyPartition`1
 ```
 
 ### Conversão
+
+Os operadores de conversão são úteis para converter o tipo dos elementos em uma sequência (coleção).
+
+#### Métodos:
+1. `ToArray`
+```
+Cria um array a partir de um IEnumerable<T>
+
+Assinatura:
+T[] ToArray<T>(this IEnumerable<T> source);
+
+T - O tipo dos elementos
+source - O IEnumerable<T> por meio do qual o Array<T> será criado
+retorna um array que contém os elementos da sequência de entrada
+
+Se source for null, lança uma ArgumentNullException
+
+Este método força a avaliação de consulta imediata e retorna um array que contém os resultados da consulta
+```
+
+2. `ToDictionary`
+```
+Cria um Dictionary<TKey,TValue> de um IEnumerable<T>
+
+Assinatura:
+Dictionary<Tkey,Telement> ToDictionary<TSource, TKey, TElement>
+(this IEnumerable<TSource> source,
+Func<TSource,TKey> keySelector,
+Func<TSource,TElement> elementSelector);
+
+TSource - O tipo dos elementos de source
+TKey - O tipo de chave retornada por keySelector
+TElement - O tipo do valor retornado por elementSelector
+
+source - Um IEnumerable<T> por meio do qual um Dictionary<key,value> é criado
+keySelector - Uma função para extrair a chave de cada elemento
+elementSelector - Uma função para produzir um valor de elemento de resultado
+retorna um Dictionary<key,value> que contém valores do tipo TElement selecionados da sequência de entrada.
+
+As chaves devem ser únicas, caso contrário será lançada uma exceção ArgumentException.
+```
+
+3. `ToList`
+```
+Cria um List<T> a partir de um IEnumerable<T>
+
+Assinatura:
+List<T> ToList<T>(this IEnumerable<T> source);
+
+T - O tipo dos elementos
+source - O IEnumerable<T> por meio do qual o List<T> será criado
+retorna um List<T> que contém os elementos da sequência de entrada
+
+Se source for null, lança uma ArgumentNullException
+
+Este método força a avaliação de consulta imediata e retorna um List<T> que contém os resultados da consulta
+```
+
+4. `ToLookup`
+```
+Cria um Lookup<TKey, TValue> genérico a partir de um IEnumerable<T>.
+
+Assinatura:
+ILookup<Tkey,Telement> ToLookup<TSource, TKey, 
+TElement>(this IEnumerable<TSource> source,
+Func<TSource,TKey> keySelector,
+Func<TSource,TElement> elementSelector);
+
+TSource - O tipo dos elementos de source
+TKey - O tipo de chave retornada por keySelector
+TElement - O tipo do valor retornado por elementSelector
+
+source - Um IEnumerable<T> por meio de qual um Lookup<key,Telement> é criado
+keySelector - Uma função para extrair a chave de cada elemento
+elementSelector - Uma função para produzir um valor de elemento de resultado
+
+Assim como um dicionário, um Lookup é uma coleção de pares chave/valor. A diferença é que um Dictionary mapeia chaves para valores únicos, enquanto um Lookup mapeia chave para coleção de valores. 
+
+obs: Um dicionário não pode conter chaves com valores idênticos, enquanto que um Lookup pode.
+```
+
+5. `AsEnumerable`
+```
+É usado para converter o tipo especificado de uma determinada lista em seu seu tipo equivalente IEnumerable.
+
+Assinatura:
+IEnumerable<TSource> AsEnumerable<TSource>(IEnumerable<TSoruce> source);
+
+TSource - O tipo dos elementos de source
+source - A sequência a ser tratada como IEnumerable<T>
+
+Retorna um IEnumerable<T> que contém os elementos da sequência de entrada
+
+Este método não tem nenhum efeito além de alterar o tipo da fonte em tempo de compilação de um tipo que implementa IEnumerable<T> no próprio IEnumerable<T>.
+```
+
+6. `AsQueryable`
+```
+Converte um IEnumerable em um IQueryable
+
+Assinatura:
+IQueryable AsQueryable(this IEnumerable source);
+
+source - Uma sequência a ser convertida
+retorna um IQueryable que representa a sequência de entrada
+
+Queryable fornece um conjunto de métodos para consultar estruturas de dados que implementam IQueryable.
+```
+
+7. `Cast`
+```
+Tenta converter todos os itens de uma coleção em outro tipo e retorná-los em uma nova coleção que contém os elementos convertidos para o tipo especificado.
+
+Assinatura:
+IEnumerable<TResult> Cast<TResult>(this IEnumerable source);
+
+source - Contém os elementos a serem convertidos para TResult
+TResult - O tipo no qual os elementos de source deverão ser convertidos
+retorna um IEnumerable<T> que contém cada elemento da sequência de origem convertido para o tipo especificado
+
+Se source for null lança uma ArgumentNullException
+
+Obs: Cast vai tentar converter todos os elementos presentes na sequência de origem em um tipo especificado. Se algum dos elementos na sequência de origem não puder ser convertido para o tipo especificado, ele lançará InvalidCastException
+```
+
+8. `OfType`
+```
+É usado para filtrar dados de tipo específico de uma fonte de dados com base no tipo de dados que passamos para este operador.
+
+Assinatura:
+IEnumerable<TResult> OfType<TResult>(this IEnumerable source);
+
+source - Contém os elementos a serem convertidos para TResult
+TResult - O tipo no qual os elementos de source deverão ser convertidos
+retorna um IEnumerable<T> que contém cada elemento da sequência de origem convertido para o tipo especificado
+
+Se source for null lança uma ArgumentNullException
+
+Obs: OfType retorna apenas os elementos do tipo especificado e o restante dos elementos na sequência de origem será ignorado e excluído do resultado
+```
+
+##### Exemplos
+
+`ToArray`
+```cs
+List<int> numeros = new List<int>() { 10, 14, 33, 81, 20, 105 };
+
+int[] resultado = numeros.ToArray();
+
+foreach(int n in resultado)
+    Console.Write(n + " ");
+```
+
+Saída:
+```
+10 14 33 81 20 105
+```
+
+`ToDictionary`
+```cs
+class Aluno
+{
+    public string Nome { get; set; }
+    public string Curso { get; set; }
+    public int Id { get; set; }
+}
+
+List<Aluno> alunos = new List<Aluno>() 
+    { 
+        new Aluno() {Nome = "Maria", Curso = "Java", Id=1},
+        new Aluno() {Nome = "Danilo", Curso = "C#", Id=2},
+        new Aluno() {Nome = "Henrique", Curso = "Python", Id=3},
+        new Aluno() {Nome = "Rafael", Curso = "C#", Id=4},
+        new Aluno() {Nome = "Laura", Curso = "Php", Id=5},
+        new Aluno() {Nome = "Carlos", Curso = "Php", Id=6}
+    };
+// Usando o Id do aluno como chave (pois é um valor único)
+var resultado = alunos.ToDictionary<Aluno, int>(a => a.Id);
+
+foreach(var key in resultado.Keys)
+	Console.WriteLine($"Chave: {key} Valor: {resultado[key].Nome}, {resultado[key].Curso}");
+```
+
+Saída:
+```
+Chave: 1 Valor: Maria, Java
+Chave: 2 Valor: Danilo, C#
+Chave: 3 Valor: Henrique, Python
+Chave: 4 Valor: Rafael, C#
+Chave: 5 Valor: Laura, Php
+Chave: 6 Valor: Carlos, Php
+```
+
+
+`ToList`
+```cs
+string[] paises = { "USA", "India", "Brasil", "Peru", "Itália", "Angola" };
+
+List<string> resultado = paises.ToList();
+
+foreach(string pais in resultado)
+    Console.WriteLine(pais);
+```
+
+Saída:
+```
+USA
+India
+Brasil
+Peru
+Itália
+Angola
+```
+
+`ToLookup`
+```cs
+class Funcionario
+{
+    public string Nome { get; set; }
+    public int SetorId { get; set; }
+    public int Id { get; set; }
+}
+
+List<Funcionario> funcionarios = new List<Funcionario>()
+    {
+        new Funcionario() {Nome = "Maria", Setor = "Vendas", Id=1},
+        new Funcionario() {Nome = "Danilo", Setor = "Marketing", Id=2},
+        new Funcionario() {Nome = "Henrique", Setor = "Vendas", Id=3},
+        new Funcionario() {Nome = "Rafael", Setor  = "Produção", Id=4},
+        new Funcionario() {Nome = "Laura", Setor = "Administração", Id=5},
+        new Funcionario() {Nome = "Carlos", Setor = "Produção", Id=6}
+    };
+
+// Agrupando por setor
+var resultado = funcionarios.ToLookup<Funcionario, string>(f => f.Setor);
+
+foreach(var grupo in resultado)
+{
+    Console.WriteLine($"Chave: {grupo.Key}");
+    foreach (var key in grupo)
+        Console.WriteLine($"Valor: {key.Nome} Id: {key.Id}");
+    
+    Console.WriteLine(); // espaçamento
+ }
+```
+
+Saída:
+```
+Chave: Vendas
+Valor: Maria Id: 1
+Valor: Henrique Id: 3
+
+Chave: Marketing
+Valor: Danilo Id: 2
+
+Chave: Produção
+Valor: Rafael Id: 4
+Valor: Carlos Id: 6
+
+Chave: Administração
+Valor: Laura Id: 5
+```
+
+`AsEnumerable`
+```cs
+int[] numeros = new int[] { 1, 2, 3, 4, 5, 6 };
+
+IEnumerable<int> resultado = numeros.AsEnumerable();
+
+foreach(int n in resultado)
+    Console.Write(n + " ");
+Console.WriteLine();
+
+List<string> frutas = new List<string>() 
+{ "abacaxi", "melão", "goiaba", "ameixa", "pêssego" };
+
+IEnumerable<string> resultado = frutas.AsEnumerable();
+
+foreach(string s in resultado)
+    Console.WriteLine(s);
+```
+
+Saída:
+```
+1 2 3 4 5 6
+abacaxi
+melão
+goiaba
+ameixa
+pêssego
+```
+
+`AsQueryable`
+```cs
+int[] numeros = new int[] { 1, 5, 56, 78, 91, 10, 15, 33 };
+
+var resultado = numeros.AsQueryable();
+
+Expression expressionTree = resultado.Expression;
+Console.WriteLine($"O NodeType da árvore de expressão é:{expressionTree.NodeType}");
+Console.WriteLine($"O tipo de árvore da expressão é: {expressionTree.Type.Name}");
+
+foreach(var i in resultado)
+    Console.Write(i + " ");
+Console.WriteLine();
+
+double media = Queryable.Average(numeros.AsQueryable());
+int soma = Queryable.Sum(numeros.AsQueryable());
+int count = Queryable.Count(numeros.AsQueryable());
+int min = Queryable.Min(numeros.AsQueryable());
+int max = Queryable.Max(numeros.AsQueryable());
+
+Console.WriteLine($"Contagem: {count}");
+Console.WriteLine($"Soma: {soma}");
+Console.WriteLine($"Média: {media}");
+Console.WriteLine($"Mínimo: {min}");
+Console.WriteLine($"Máximo: {max}");
+```
+
+Saída:
+```
+O NodeType da árvore de expressão é: Constant
+O tipo de árvore da expressão é: EnumerableQuery`1
+1 5 56 78 91 10 15 33
+Contagem: 8
+Soma: 289
+Média: 36.125
+Mínimo: 1
+Máximo: 91
+```
+
+`Cast`
+```cs
+ArrayList arrayList= new ArrayList() { 10, 20, 30 };
+
+IEnumerable<int> resultado = arrayList.Cast<int>();
+
+foreach(int i in resultado)
+    Console.Write(i + " ");
+```
+
+Saída:
+```
+10 20 30
+```
+
+==Nota: se tentarmos adicionar algum outro tipo de dado (que não seja int) na arrayList após a conversão dela pra int, teremos um erro do tipo InvalidCastException ==
+
+`Oftype`
+```cs
+// list de tipo object aceita int, string, decimal, bool, etc.
+List<object> list = new List<object>() 
+{ "abacate", 30m, "Maria", 40.56, 10, false, 500, 3, true, "avião" };
+
+// filtra os dados, conforme o tipo especificado
+
+// Sintaxe de Consulta
+var dadosInt = (from s in list
+                where s is string
+                select s).ToList();
+
+// Sintaxe de Método
+var dadosString = list.OfType<string>();
+
+Console.WriteLine("Dados int:");
+foreach(int n in dadosInt)
+    Console.Write( n + " ");
+
+Console.WriteLine("\n\nDados string:");
+	foreach(string s in dadosString)
+        Console.WriteLine(s);
+```
+
+Saída:
+```
+Dados int:
+10 500 3
+
+Dados string:
+abacate
+Maria
+avião
+```
 
 
 ### Outras
