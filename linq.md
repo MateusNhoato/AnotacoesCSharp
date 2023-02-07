@@ -19,6 +19,11 @@
     - [Quantificação](#quantificação)
     - [Agrupamento](#agrupamento)
     - [Junção](#junção)
+    - [Elementos](#elementos)
+    - [Particionamento](#particionamento)
+    - [Geração](#geração)
+    - [Conversão](#Conversão)
+    - [Outras](#outras)
 - [Créditos](#créditos)
 
 ---
@@ -273,7 +278,7 @@ Usado para:
 1. Selecionar todos os dados no estado original.
 2. Criar um novo formato de dados realiazndo operações nos dados originais.
 
-Temos dois métodos usados para projeção na Linq:
+#### Métodos:
 - `Select`
     ```
     Permite especificar quais propriedades queremos recuperar: todas as propriedades ou algumas das propriedades.
@@ -834,7 +839,7 @@ Obs: ==não forma incluídos os números repetidos==.
 
 Os operadores de ordenação realizam o processo de gerenciar os dados em uma determinada ordem sem alterar os dados ou a saída, apenas organizando os dados em uma ordem específica, seja crescente ou decrescente. ==Estes métodos são utilizados na Sintaxe de Método, na Sintaxe de Consulta usamos outros operadores.== 
 
-Métodos fornecidos pela LINQ para ordernar dados:
+#### Métodos:
 
 1. `OrderBy` 
 ```
@@ -1001,7 +1006,7 @@ Saída:
 
 Os operadores de agregação são usados para realizar operações matemáticas em uma coleção de valores retornado um único valor.
 
-Existem os seguintes métodos de agregação na LINQ:
+#### Métodos:
 
 1. `Aggregate`
 ```
@@ -1095,7 +1100,7 @@ Nomes: Maria, João, Robson, Tatiane
 
 Os operadores de quantificação são usados em uma fonte de dados quando queremos verificar se alguns ou todos os elementos atendem a uma condição ou não. Eles retornam um **valor booleano (true ou false)**, que indica se alguns ou todos os elementos na fonte de dados satisfazem a condição.
 
-Métodos:
+#### Métodos:
 
 1. `All`
 ```
@@ -1227,7 +1232,7 @@ O agrupamento é um dos recursos mais poderosos da LINQ, e podemos agrupar dados
 
 No agrupamento podemos obter os elementos individuais, pois é criada uma sequência de grupos e eses grupos implementam IGrouping< TKey,T>, onde *TKey* é o atributo usado para fazer o agrupamento e *T* representa a entidade original.
 
-Métodos de Agrupamento:
+#### Métodos:
 
 1. `GroupBy`
 ```
@@ -1353,6 +1358,7 @@ As operações de junção são usadas para buscar dados de duas ou mais fontes 
 Podemos realizar diferentes tipos de junções como: **Inner Join, Right Join, Left Join, Full Join e Cross Join** na LINQ.
 
 ![Linq-Junção](img/linq4.png)
+
 Uma cláusula join recebe duas sequências de origem como entrada. Os elementos em cada sequência devem ser ou conter uma propriedade que possa ser comparada com uma propriedade correspondente na outra sequência. A cláusula join compara a igualdade das chaves especificadas usando a palavra-chave equals. Logo, todas as junções realizadas pela cláusula join são junções por igualdade.
 
 A forma de saída depende do tipo de junção que estamos realizando(inner,left,etc.)
@@ -1653,6 +1659,25 @@ Sem Curso
 Aluno: Amanda | Id: 4 | Idade: 21
 ```
 
+
+`Join` - Cross Join
+```cs
+var crossJoin = from a in alunos
+				from c in cursos
+				select new
+				{
+					a.Nome,
+					Id = a.AlunoId,
+					a.Idade,
+					Curso = c.Nome
+				};
+
+foreach(var a in crossJoin)
+{
+	Console.WriteLine($"Aluno: {a.Nome} | Id: {a.Id} | Idade: {a.Idade} | Curso: a.Curso");
+}
+```
+
 Saída:
 ```
 Aluno: Vitor | Id: 1 | Idade: 18 | Curso: Física
@@ -1732,6 +1757,840 @@ Aluno: Amanda | Id: 8 | Idade: 18
 Letras
 ```
 
+`Join` - com mais de 2 coleções
+```cs
+class Funcionario
+{
+    public int FuncionarioId { get; set; }
+    public string Nome { get; set; }
+    public int? SetorId { get; set; }
+    public int? EnderecoId { get; set; }
+}
+
+class Setor
+{
+    public int SetorId { get; set; }
+    public string Nome { get; set; }
+}
+
+class Endereco
+{
+    public int EnderecoId { get; set; }
+    public string Nome { get; set; }
+}
+
+List<Funcionario> funcionarios = new List<Funcionario>()
+        { 
+            new Funcionario() { Nome= "Mario", FuncionarioId= 1, EnderecoId=1, SetorId=1}, 
+            new Funcionario() { Nome= "Franciele", FuncionarioId= 2, EnderecoId=5, SetorId=2}, 
+            new Funcionario() { Nome= "Jessica", FuncionarioId= 3, EnderecoId=4, SetorId=4}, 
+            new Funcionario() { Nome= "Danilo", FuncionarioId= 4, EnderecoId=2, SetorId=3}, 
+            new Funcionario() { Nome= "Henrique", FuncionarioId= 5, EnderecoId=3, SetorId=1}
+        };
+
+List<Setor> setores = new List<Setor>()
+    {
+        new Setor() {Nome="Vendas", SetorId=1},
+        new Setor() {Nome="Marketing", SetorId=2},
+        new Setor() {Nome="Produção", SetorId=3},
+        new Setor() {Nome="Administrativo", SetorId=4}
+    };
+
+List<Endereco> enderecos = new List<Endereco>()
+	{
+        new Endereco() { Nome= "Rua 1, 101", EnderecoId= 1},
+        new Endereco() { Nome= "Rua 27, 203 apto 5", EnderecoId= 2},
+	    new Endereco() { Nome= "Rua 3, 335", EnderecoId= 3},
+        new Endereco() { Nome= "Rua 55, 6", EnderecoId= 4},
+        new Endereco() { Nome= "Rua 16, 123 apto 310", EnderecoId= 5}
+    };
+
+
+// Sintaxe de Consulta
+var grupos = (from f in funcionarios
+              join s in setores
+              on f.SetorId equals s.SetorId
+              join e in enderecos
+              on f.EnderecoId equals e.EnderecoId
+              select new
+              {
+                f.Nome,
+                Setor = s.Nome,
+                Endereco = e.Nome
+               }).GroupBy(x => x.NomeSetor);
+
+// Sintaxe de Método
+var grupos = funcionarios.Join(setores, 
+                                f => f.SetorId, 
+                                s => s.SetorId, 
+                                (f, s) => new
+                                    {
+                                        f.Nome,
+                                        Setor = s.Nome,
+                                        EnderecoID = f.EnderecoId
+                                      }).Join(enderecos, 
+                                      x => x.EnderecoID, 
+                                      e => e.EnderecoId,
+                                      (x, e) => new
+                                      {
+                                        x.Nome,
+                                        x.Setor,
+                                        Endereco = e.Nome
+                                      }).GroupBy(x => x.Setor);
+
+
+
+foreach(var grupo in grupos)
+        {
+            Console.WriteLine(grupo.Key);
+            foreach(var funcionario in grupo)
+            {
+                Console.WriteLine($"{funcionario.Nome} | {funcionario.Setor} |{funcionario.Endereco}");
+            }
+            Console.WriteLine();
+        }
+```
+
+Saída:
+```
+Vendas
+Mario | Vendas | Rua 1, 101
+Henrique | Vendas | Rua 3, 335
+
+Marketing
+Franciele | Marketing | Rua 16, 123 apto 310
+
+Administrativo
+Jessica | Administrativo | Rua 55, 6
+
+Produção
+Danilo | Produção | Rua 27, 203 apto 5
+```
+
+### Elementos
+
+Os Operadores de elementos são usados para retornar um único elemento de uma fonte de dados usando o índice do elemento ou com base em um predicado, ou seja, uma condição. Podem ser usados com uma única fonte de dados ou em uma consulta de vários fontes de dados.
+
+São muito usados nas seguintes operações:
+- Selecionar o primeiro registro de uma fonte de dados
+- Buscar um registro específico da fonte de dados
+- Selecionar o último registro de uma fonte de dados
+
+#### Métodos:
+
+1. `ElementAt`
+```
+É usado para retornar um elemento de índice específico. Se a fonte de dados estiver vazia ou se o valor do índice fornecido estiver fora do intervalo, obtemos uma exceção do tipo ArgumentOutOfRangeException.
+```
+
+2. `ElementAtOrDefault`
+```
+Faz a mesma coisa que o método ElementAt, exceto que este método não lança uma exceção quando a fonte de dados está vazia ou quando o valor do índice fornecido está fora do intervalo. Nos casos que obteríamos exceções, ele retornará o valor padrão com base no tipo de dados do elemento que a fonte de dados contém (tipos referência retornarão null).
+```
+
+3. `First`
+```
+É usado para retornar o primeiro elemento de uma fonte de dados. Se a fonte de dados estiver vazia, este método lançará uma exceção do tipo InvalidOperationException.
+
+Tem duas sobrecargas:
+1. Retorna o primeiro elemento da sequência
+2. Retorna o primeiro elemento da sequência que satisfaz uma condição que passamos com um delegate Func
+```
+
+4. `FirstOrDefault`
+```
+Faz a mesma coisa que o método First, exceto que este método não lança uma exceção de operação inválida. Ao invés disso, ele retorna o valor padrão com base no tipo de dados do elemento.
+```
+
+5. `Last`
+```
+É usado para retornar o último elemento de uma coleção/sequência. Lança uma exceção ArgumentNullException se a coleção/sequência for null e uma exceção InvalidOperationException se a coleção estiver vazia.
+
+Tem duas sobrecargas:
+1. Retorna o último elemento da sequência
+2. Retorna o último elemento da sequência que satisfaz uma condição que passamos com um
+delegate Func
+```
+
+6. `LastOrDefault`
+```
+Faz a mesma coisa quue o método Last, exceto que não lança uma exceção de operação inválida. Ao invés disso, retorna o valor patrão com base no tipo de dados do elemento.
+```
+
+7. `Single`
+```
+Retorna um único e específico elemento da coleção, lança uma exceção do tipo InvalidOperationException se não houver exatamente um elemento na coleção, se existir mais de um elemento com as condições passadas ou se nenhum elemento satisfaz a condição.
+
+Tem duas sobrecargas:
+1. Retorna o único elemento da coleção
+2. Retorna o único elemento da coleção que satisfaz uma condição que passamos com um delegate Func
+```
+
+8. `SingleOrDefault`
+```
+Faz a mesma coisa que o método Single, exceto que não lançará uma exceção quando a coleção estiver vazia ou quando nenhum elemento na coleção satisfizer a condição fornecida. (Continua lançando uma exceção se a coleção tiver mais de um elemento ou se mais de um elemento atender a condição passada)
+```
+
+9. `DefaultIfEmpty`
+```
+O método DefaultIfEmpty<T>() retorna os elementos da coleção especificada ou o valor padrão do parâmetro de tipo em uma coleção de singletons se a coleção estiver vazia.
+
+Tem duas sobrecargas:
+1. Não aceita nenhum parâmetro e, neste caso, se a coleção estiver vazia, ela retornará os valores padrão com base no tipo de dados.
+
+2. Podemos passar o valor padrão se a coleção estiver vazia, esse valor padrão será retornado pelo próprio método. 
+```
+
+##### Exemplos:
+
+`ElementAt`
+```cs
+class Aluno
+{
+    public string Nome;
+    public string Curso;
+    public int Idade;
+}
+
+// Consulta simples
+int[] array = {10, 20, 30, 40, 50, 60};
+
+// Sintaxe de Consulta
+int resultado = (from num in numeros
+				select num).ElementAt(5);
+
+// Sintaxe de Método
+int resultado = numeros.ElementAt(5);
+
+Console.WriteLine(resultado);
+
+// Consulta com objeto complexo
+List<Aluno> alunos = new List<Aluno>()
+    {
+        new Aluno() {Nome = "Amanda", Curso = "Medicina", Idade=25},
+        new Aluno() {Nome = "Cláudio", Curso = "Matemática", Idade=22},
+        new Aluno() {Nome = "Fernando", Curso = "Geografia", Idade=33},
+        new Aluno() {Nome = "Bruna", Curso = "Psicologia", Idade=19}
+    };
+
+ // Obtendo o objeto completo
+Aluno aluno = alunos.ElementAt(3);
+Console.WriteLine($"Nome: {aluno.Nome} | Idade: {aluno.Idade} | Curso: {aluno.Curso}");
+
+// Obtendo somente o nome do aluno
+string nomeAluno = alunos.Select(a => a.Nome).ElementAt(3);
+Console.WriteLine($"Nome: {nomeAluno}");
+```
+
+Saída:
+```
+60
+Nome: Bruna | Idade: 19 | Curso: Psicologia
+Nome: Bruna
+```
+==Nota: quando se trata de uma fonte de dados de um objeto complexo, se não quisermos o objeto inteiro, mas só um atributo deste objeto, basta utilizarmos um Select com uma lambda (passando o atributo que queremos) e então usamos o ElementAt.==
+
+`First`
+```cs
+// Consulta simples
+List<int> numeros = new List<int>() { 10, 20, 30, 40, 50, 60 };
+
+int resultado1 = numeros.First();
+int resultado2 = numeros.First(n => n > 40);
+
+Console.WriteLine(resultado1);
+Console.WriteLine(resultado2);
+
+List<Aluno> alunos = new List<Aluno>()
+    {
+       new Aluno() {Nome = "Amanda", Curso = "Medicina", Idade=25},
+       new Aluno() {Nome = "Cláudio", Curso = "Matemática", Idade=22},
+	   new Aluno() {Nome = "Fernando", Curso = "Geografia", Idade=33},
+       new Aluno() {Nome = "Bruna", Curso = "Psicologia", Idade=19},
+    };
+
+// Tipo complexo
+Aluno aluno = alunos.First(a => a.Idade > 30);
+
+Console.WriteLine($"Nome: {aluno.Nome} | Idade: {aluno.Idade} | Curso: {aluno.Curso}");
+```
+
+Saída:
+```
+10
+50
+Nome: Fernando | Idade: 33 | Curso: Geografia
+```
+
+`Last`
+```cs
+// Consulta simples
+List<int> numeros = new List<int>() { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+
+// Sintaxe de Consulta
+int resultado1 = (from num in numeros
+				 select num).Last();
+
+// Sintaxe de Método
+int resultado2 = numeros.Last(n => n < 80);
+
+Console.WriteLine(resultado1);
+Console.WriteLine(resultado2);
+
+```
+
+Saída:
+```
+100
+70
+```
+
+`Single`
+```cs
+List<int> numeros = new List<int>() { 10 };
+
+// Retorna normalmente
+int resultado1 = numeros.Single();
+Console.WriteLine(resultado1);
+
+List<int> numeros = new List<int>() {10, 20, 30};
+
+//Dá erro
+int resultado2 = numeros.Single();
+Console.WriteLine(resultado2);
+```
+
+Saída:
+```
+10
+erro
+```
+
+`DefaultIfEmpty`
+```cs
+ // Consulta simples
+List<int> numeros = new List<int>() { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+
+var resultado = numeros.DefaultIfEmpty();
+
+foreach(var i in resultado)
+    Console.Write($"{i} ");
+Console.WriteLine();
+
+// Consulta em coleção vazia
+List<int> numeros2 = new List<int>();
+
+var resultado2 = numeros2.DefaultIfEmpty();
+
+foreach(var i in resultado2)
+    Console.Write($"{i} ");
+Console.WriteLine();
+
+// Consulta em coleção vazia, definindo o valor padrão
+var resultado3 = numeros2.DefaultIfEmpty(5);
+
+foreach(var i in resultado2)
+    Console.Write($"{i} ");
+Console.WriteLine();
+
+// Consulta de tipo complexo
+class Filme
+{
+    public string Titulo;
+    public int Avaliacao;
+}
+
+List<Filme> filmes = new List<Filme>()
+    {
+        new Filme() {Titulo = "Titanic", Avaliacao= 7},
+        new Filme() {Titulo = "O Mágico de Oz", Avaliacao= 8},
+        new Filme() {Titulo = "O Último Samurai", Avaliacao= 6}
+    };
+
+// Filtrando o primeiro filme que tenha avaliação >= 9
+// Mas, como não temos, o retorno é o filmeFavorito (valor default)
+Filme filmeFavorito = new Filme() { Titulo = "Scott Pilgrim contra o Mundo", 
+									Avaliacao = 8 };
+
+var filmeParaAssistir = filmes.Where(f => f.Avaliacao >= 9)
+                              .DefaultIfEmpty(filmeFavorito)
+                              .First();
+
+Console.WriteLine(filmeParaAssistir.Titulo);
+```
+
+Saída:
+```
+10 20 30 40 50 60 70 80 90 100
+0
+5
+Scott Pilgrim contra o Mundo
+```
+
+### Particionamento
+
+As operações de particionamento da LINQ são usadas para dividir uma fonte de dados em duas partes e depois retornar uma delas como saída **sem** alterar as posições dos elementos.
+
+#### Cenários de uso:
+
+- Selecionar um número n superior de registros de uma fonte de dados
+- Selecionar registros de uma fonte de dados até que uma condição especificada seja verdadeira
+- Selecionar registros de uma fonte de dados, exceto para o primeiro n números de registros
+- Ignorar os registros de uma fonte de dados até que uma condição definida seja verdadeira e, em seguida, selecione todos os registros
+- Implementar a paginação para uma fonte de dados
+
+#### Métodos:
+1. `Take`
+```
+É usado para retornar os primeiro "n" elementos da fonte de dados, onde "n" é um número inteiro que é passado como parâmetro para o método Take.
+
+Tem duas sobrecargas:
+1. Retorna um número especificado de elementos contíguos desde o início de uma sequência.
+
+2. Retorna um intervalo especificado de elementos contíguos de uma sequência. 
+```
+
+2. `TakeWhile`
+```
+Retorna elementos de uma sequência desde que uma condição especificada seja verdadeira e, em seguida, ignora os elementos restantes. Depois que a condição falhar, o método TakeWhile não verificará o restante dos elementos presentes na fonte de dados, mesmo que a condição seja verdadeira para os elementos restantes.
+
+Tem duas sobrecargas:
+1. Retorna elementos de uam sequência desde que uma condição especificada seja verdadeira.
+
+2. Retorna elementos de uma sequência desde qeu uma condição especificada seja verdadeira. O índice do elemento é uusado na lógica da função do predicado. 
+```
+
+3. `Skip`
+```
+Ignora um número "n" especificado de elementos em uma sequência e retorna os elementos restantes. Aqui "n" é um valor inteiro passado para o método Skip como parâmetro. Se a fonte de dados for nula, este método lançará uma exceção.
+```
+
+4. `SkipWhile`  
+```
+Ignora os elementos em uma fonte de dados desde que uma condição especificada seja verdadeira e, em seguida, retorna os elementos restantes.
+
+Tem duas sobrecargas:
+1. Ignora os elementos em uma sequência, desde que uma condição especificada seja verdadeira. E, em seguida, retorna os elementos restantes.
+
+2. Ignora os elementos em uma sequência desde que uma condição especificada seja verdadeira e, em seguida, retorna os elementos restantes. O índice do elemento é usado na lógica da função de predicado.
+```
+
+==Nota: Todos os métodos de particionamento são implementados com execução adiada (deferred execution)==
+
+##### Exemplos:
+
+`Take`
+```cs
+List<int> numeros = new List<int>() { 1, 2, 4, 9, 10, 7, 3, 6, 5, 8 };
+
+// Utilizando só o Take
+var resultado = numeros.Take(4).ToList();
+
+foreach(var n in resultado)
+    Console.Write($"{n} ");
+Console.WriteLine();
+
+// Ordenando antes da utilização do Take
+var resultado2 = numeros.OrderByDescending(n => n)
+                        .Take(4).ToList();
+
+foreach (var n in resultado2)
+    Console.Write($"{n} ");
+Console.WriteLine();
+
+// Ordenando e filtrando antes da utilização do take
+var resultado3 = numeros.OrderByDescending(n => n)
+                        .Where(n => n < 7)
+                        .Take(4).ToList();
+
+foreach (var n in resultado3)
+    Console.Write($"{n} ");
+Console.WriteLine();
+
+```
+
+Saída:
+```
+1 2 4 9
+10 9 8 7
+6 5 4 3
+```
+
+`TakeWhile`
+```cs
+// Consulta em uma lista ordenada
+List<int> numeros = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+var resultado = numeros.TakeWhile(num => num < 7);
+
+foreach (var num in resultado)
+    Console.Write($"{num} ");
+Console.WriteLine();
+
+// Consulta com uma lista não ordenada utilizando a mesma condição
+List<int> numeros2 = new List<int>() { 1, 2, 6, 8, 7, 3, 5, 10, 4, 9};
+
+var resultado2 = numeros2.TakeWhile(num => num < 7);
+
+foreach (var num in resultado2)
+    Console.Write($"{num} ");
+Console.WriteLine();
+
+// Consulta com uma lista que já começa com número maior q 7
+List<int> numeros3 = new List<int>() { 8, 7, 3, 5, 10, 4, 9};
+
+var resultado3 = numeros3.TakeWhile(num => num < 7);
+
+foreach (var num in resultado3)
+    Console.Write($"{num} ");
+Console.WriteLine();
+
+```
+
+Saída:
+```
+1 2 3 4 5 6
+1 2 6
+  // saída vazia, uma vez que a condição não foi atendida no primeiro elemento da terceira consulta
+```
+
+==Note a diferença dos resultados das consultas, mesmo usando uma única condição==
+
+`Skip`
+```cs
+// Consulta com Skip
+List<int> numeros = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+var resultado = numeros.Skip(4);
+
+foreach (var num in resultado)
+    Console.Write($"{num} ");
+Console.WriteLine();
+
+// Consulta filtrando e depois usando o Skip
+var resultado2 = numeros
+                .Where(n => n > 3)            
+                .Skip(4);
+
+foreach (var num in resultado2)
+    Console.Write($"{num} ");
+Console.WriteLine();
+```
+
+Saída:
+```
+5 6 7 8 9 10
+8 9 10
+```
+
+`SkipWhile`
+```cs
+// Consulta com lista ordenada
+List<int> numeros = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+// Ignora elementos com valor menor que 5
+var resultado = numeros.SkipWhile(n => n < 4);
+
+foreach (var num in resultado)
+    Console.Write($"{num} ");
+Console.WriteLine();
+
+// Mesma condição da consulta passada, mas com uma lista não ordenada
+List<int> numeros2 = new List<int>() { 4, 1, 3, 2, 5, 7, 9, 6, 8, 10 };
+
+var resultado2 = numeros2.SkipWhile(n => n < 4);
+
+foreach (var num in resultado2)
+    Console.Write($"{num} ");
+Console.WriteLine();
+
+// Exemplo da segunda sobrecarga do método, utilizando o index na lógica do predicate
+List<string> nomes = new List<string>() { "Sara", "Raul", "José", "Ana", "Pedro" };
+
+List<string> resultado3 = nomes.SkipWhile((nome, index) =>
+                                nome.Length > index).ToList();
+
+foreach(var nome in resultado3)
+    Console.WriteLine(nome);
+```
+
+Saída:
+```
+4 5 6 7 8 9 10
+4 1 3 2 5 7 9 6 8 10
+Ana
+Pedro
+```
+
+==Note a diferença dos resultados das consultas, mesmo usando uma única condição==
+
+Com Skip e Take podemos fazer [paginações](https://github.com/MateusNhoato/PagingCsvFile).
+
+### Geração
+
+Os operadores de geração da LINQ referem-se a criação de uma nova sequência de valores. Os métodos de operadores de geração permitem criar algum tipo específico de array, sequência ou coleção usando uma única expressão ao invés de criá-los manualmente e preenchê-los usando algum tipo de loop. Eles retornam uma nova sequência ou coleção que implementa a interface IEnumerable< T >.
+
+#### Métodos:
+1. `Range`
+```
+Gera uma sequência de números inteiros dentro de um intervalo especificado.
+
+Assinatura:
+IEnumerable<int> Range(int start, int count);
+
+start - O Valor do primeiro inteiro na sequência
+count - O número de inteiros sequenciais a serem gerados
+retorna um IEnumerable<Int32> que contém um intervalo de números inteiros sequenciais.
+
+Se o count for menor que zero ou quando o valor start + count -1 for maior que o MaxValue lança uma exceção do tipo ArgumentOutOfRangeException.
+
+Esse método é implementado usando execução adiada e o valor de retorno imediato é um objeto que armazena todas as informações necessárias para executar a ação.
+```
+
+2. `Repeat<T>`
+```
+Gera uma sequência ou coleção com um número especificado de elementos e cada elemento contém o mesmo valor.
+
+Assinatura:
+IEnumerable<T> Repeat<T>(T element, int count);
+
+element - O valor a ser repetido
+count - O número de vezes que o valor será repetido na sequência
+retorna um IEnumerable<T> que contém os valores repetidos.
+
+Se o count for menor que zero lança uma exceção do tipo ArgumentOutOfRangeExpection.
+Este método é implementado usando execução adiada e o valor de retorno imediato é um objeto que armazena todas as informações necessárias para executar a ação.
+```
+
+3. `Empty<T>`
+```
+É usado para retornar uma coleção vazia (ou seja, IEnumerable<T>) de um tipo especificado.
+
+Assinatura:
+IEnumerable<T> Empty<T>();
+
+O Método Empty<T>() armazena em cache uma sequência vazia do tipo T. Quando o objeto que ele retorna é enumerado, ele não produz nenhum elemento.
+```
+
+##### Exemplos:
+
+`Range`
+```cs
+// Padrão
+IEnumerable<int> numeros = Enumerable.Range(1, 10);
+
+foreach (int i in numeros)
+	Console.Write($"{i} ");
+Console.WriteLine();
+
+// Filtrando os números pares de 1 a 10 e depois elevando-os ao quadrado
+IEnumerable<int> numeros2 = Enumerable.Range(1, 10)
+                                      .Where(n => n % 2 == 0)
+                                      .Select(n => n * n);
+
+foreach (int i in numeros2)
+   Console.Write($"{i} ");
+Console.WriteLine();
+
+```
+
+Saída:
+```
+1 2 3 4 5 6 7 8 9 10
+
+```
+
+`Repeat`
+```cs
+var textos = Enumerable.Repeat("texto exemplo - LINQ", 10);
+
+foreach (string t in textos)
+    Console.WriteLine(t);
+```
+
+Saída:
+```
+texto exemplo - LINQ
+texto exemplo - LINQ
+texto exemplo - LINQ
+texto exemplo - LINQ
+texto exemplo - LINQ
+texto exemplo - LINQ
+texto exemplo - LINQ
+texto exemplo - LINQ
+texto exemplo - LINQ
+texto exemplo - LINQ
+```
+
+`Empty`
+```cs
+class Aluno
+{
+    public string Nome { get; set; }
+    public int Id { get; set; }
+}
+
+// coleção vazia de tipo primitivo
+var colecaoVaziaDeStrings = Enumerable.Empty<String>();
+
+Console.WriteLine("\nColeção de strings");
+Console.WriteLine($"Count: {colecaoVaziaDeStrings.Count()}");
+Console.WriteLine($"Tipo: {colecaoVaziaDeStrings.GetType().Name}");
+
+// coleção vazia de tipo complexo
+var colecaoVaziaDeAlunos = Enumerable.Empty<Aluno>();
+
+Console.WriteLine("\nColeção de Alunos");
+Console.WriteLine($"Count: {colecaoVaziaDeAlunos.Count()}");
+Console.WriteLine($"Tipo: {colecaoVaziaDeAlunos.GetType().Name}");
+```
+
+Saída:
+```
+Coleção de strings
+Count: 0
+Tipo: EmptyPartition`1
+
+Coleção de Alunos
+Count: 0
+Tipo: EmptyPartition`1
+```
+
+### Conversão
+
+
+### Outras
+
+ Métodos/operações que não se encaixam nas outras categorias.
+
+#### Métodos:
+
+1. `Append<T>`
+```
+É usado para anexar um valor ao final da sequência sem modificar os elementos da sequência. Ele cria uma cópia de sequência com o novo elemento.
+
+Assinatura:
+IEnumerable<T> Append<T>(this IEnumerable<T> source, T element);
+
+T - representa o tipo dos elementos da sequência
+source - uma sequência de valores
+element - o valor a ser acrescentado a source (no fim da sequência)
+retorna um IEnumerable<T> que representa uma nova sequência que termina com o element
+
+Se o valor de source for null lança uma ArgumentNullException.
+```
+
+2. Prepend< T >
+```
+É usado para anexar um valor ao início da sequência sem modificar os elementos da sequência. Ele cria uma cópia da sequência com o novo elemento.
+
+Assinatura:
+IEnumerable<T> Prepend<T>(this IEnumerable<T> source, T element);
+
+T - representa o tipo dos elementos da sequência
+source - uma sequência de valores
+element - o valor a ser acrescentado a source (no começo da sequência)
+retorna um IEnumerable<T> que representa uma nova sequência que começa com o element
+
+Se o valor de source for null lança uma ArgumentNullException
+```
+
+3. Zip
+```
+É usado para aplicar uma função especificada aos elementos correspondentes de duas sequências e produzir uma sequência de resultados. O zip sempre para no limite da menor sequência.
+
+Assinatura
+Zip<TFirst,TSecond,TResult>(IEnumerable<TFirst>, IEnumerable<TSecond>, Func<TFirst, TSecond, TResult>);
+
+TFirst - O tipo dos elementos da primeira sequência de entrada
+TSecond - O tipo dos elementos da seqgunda sequência de entrada
+TResult - O tipo dos elementos da sequência de resultados
+IEnumerable<TFirst> - A primeira sequência a ser mesclada
+IEnumerable<TSecond> - A segunda sequência a ser mesclada
+Func<TFirst,TSecond,TResult> - Uma função que especifica como mesclar os elementos das duas sequências
+```
+
+##### Exemplos:
+`Append`
+```cs
+List<string> frutas = new List<string>() { "uva", "maça", "banana"};
+
+// Temos que atribuir o resultado a variável novamente pois é gerado outro IEnumerable
+// que no caso passamos para uma List com o ToList()
+frutas = frutas.Append("Abacaxi").ToList();
+
+foreach(string fruta in frutas)
+    Console.WriteLine(fruta);
+```
+
+Saída:
+```
+uva
+maça
+banana
+Abacaxi
+```
+
+`Prepend`
+```cs
+List<int> numeros = new List<int>() { 2, 3, 4, 5 };
+
+// Mesmo caso do Append
+numeros = numeros.Prepend(1).ToList();
+
+foreach(int n in numeros)
+    Console.Write(n + " ");
+```
+
+Saída:
+```
+1 2 3 4 5
+```
+
+`Zip`
+```cs
+// Exemplo 1
+int[] numeros = { 10, 20, 30, 40, 50, 60, 70, 80 };
+
+string[] palavras = { "dez", "vinte", "trinta", "quarenta" };
+
+// Criando uma string com os 2 tipos
+var resultado = numeros.Zip(palavras,
+                        (n, p) => $"{n} - {p}");
+
+foreach (var item in resultado)
+	Console.WriteLine(item);
+
+// Exemplo 2
+List<int> numeros2 = new List<int>() { 1, 2, 3, 4 };
+
+List<string> frutas = new List<string>() {"maça", "abacaxi", "banana", "laranja" };
+
+// Criando um objeto anônimo utilizando os 2 tipos
+var resultado2 = numeros2.Zip(frutas, 
+						(n, f) => new
+                            {
+                                Nome = f,
+                                Posicao = n
+	                        });
+
+foreach(var f in resultado2)
+    Console.WriteLine($"{f.Posicao} - {f.Nome}");
+```
+
+Saída:
+```
+10 - dez
+20 - vinte
+30 - trinta
+40 - quarenta
+1 - maça
+2 - abacaxi
+3 - banana
+4 - laranja
+```
+
+==Nota: No exemplo 1 só formou até "40 - quarenta", pois apesar da array de números continuar, a array de string acaba no quarenta.==
 
 
 ## Créditos

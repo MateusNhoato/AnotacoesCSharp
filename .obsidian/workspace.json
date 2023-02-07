@@ -148,15 +148,15 @@
   },
   "active": "869816627506dba9",
   "lastOpenFiles": [
-    "conceitos/classe.md",
-    "conceitos/heranca.md",
+    "front.md",
     "linq.md",
-    "conceitos/polimorfismo.md",
     "conceitos/nullable.md",
+    "conceitos/variaveis.md",
+    "conceitos/polimorfismo.md",
     "conceitos/namespace.md",
     "conceitos/modificadores_de_acesso.md",
-    "conceitos/condicional_ternaria.md",
-    "aplicacao_web_mvc.md",
-    "README.md"
+    "conceitos/modificador_de_parametros.md",
+    "conceitos/lambda.md",
+    "conceitos/interface.md"
   ]
 }

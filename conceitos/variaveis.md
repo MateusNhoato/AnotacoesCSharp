@@ -89,6 +89,7 @@ Idade:20 | Altura:1,73 | Cpf:123456789 | Sexo:M
 Nota:7,8
 ```
 ## Conversão de dados
+
 No C# temos dois tipos de dados que são sempre armazenados na memória, sendo tipos de valor e referência. Quando atribuímos um valor a uma variável dos tipos int, float, double, decimal, bool e char são do tipo VALOR. Isto porque o conteúdo vai diretamente para um local na memória.
 
 Já o tipo por REFERÊNCIA, armazena o endereço do valor onde está armazenado, por exemplo, object, string e array. Em qualquer tipo de aplicação é comum a conversão de tipos de 
@@ -108,12 +109,14 @@ static void Main()
     System.Console.WriteLine($"obkPercentual: {objPercentual} - {objPercentual.GetType()}");
 }
 ```
+
 Saída:
 ```
 ----- Boxing -----
 percentual: 10 - System.Int32
 obkPercentual: 10 - System.Int32
 ```
+
 ### Unboxing
 
 Agora vamos criar um código para mostrar o unboxing, que é o 
@@ -133,6 +136,7 @@ static void Main()
     System.Console.WriteLine($"objDesconto: {objDesconto} - {objDesconto.GetType()}");
 }
 ```
+
 Saída:
 ```
 ----- Unboxing -----
@@ -142,10 +146,12 @@ objDesconto: 10 - System.Int32
 
 
 ### Parse()
+
 O *Parse()* é utilizado para converter tipos de dados. Utilizamos no exemplo acima pois todo input de usuário (ReadLine()) é, na verdade, uma string.
 
 
 ### Convert.To()
+
 ```cs
 string[] cesta = {"5 maças", "3 peras", "4 ameixas", "2 uvas", "3 bananas", "2 abacaxis"};
     
@@ -155,6 +161,7 @@ string[] cesta = {"5 maças", "3 peras", "4 ameixas", "2 uvas", "3 bananas", "2 
         }
     System.Console.WriteLine($"Quantidade de frutas: {QtdeFrutas}");
 ```
+
 Saída:
 ```
 Quantidade de frutas: 19
