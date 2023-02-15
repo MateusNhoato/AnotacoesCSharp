@@ -5,9 +5,10 @@ Um delegate é uma classe, e quando criamos uma instância do delegate passamos 
 ## Assinatura de um Delegate
 
 Todo delegate possui uma assinatura. A assinatura de um delegate é composta de:
-1. O nome do Delegate
-2. Os argumentos que o delegate vai aceitar como parâmetro
-3. O tipo de retorno do delegate
+1. O tipo de retorno do delegate
+2. O nome do Delegate
+3. Os argumentos que o delegate vai aceitar como parâmetro
+
 
 Exemplo:
 ```cs
@@ -15,8 +16,8 @@ delegate int ExemploDeDelegate(string nome, bool b);
 ```
 
 No exemplo acima temos um Delegate com uma assinatura que nos diz que:
-- Seu nome é ExemploDeDelegate
 - Ele retorna um tipo int
+- Seu nome é ExemploDeDelegate
 - Precisa de dois parâmetros, um do tipo string e outro do tipo bool
 
 Agora, considere a função a seguir:

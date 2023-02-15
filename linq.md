@@ -1522,7 +1522,6 @@ Aluno: Amanda | Id: 8 | Idade: 18 | Curso: Química
 
 Obs: nos próximos exemplos usaremos as mesmas coleções como exemplo.
 
-
 `Join` - Left 
 ```cs
 // adicionamos mais uma consulta após ligar as coleções

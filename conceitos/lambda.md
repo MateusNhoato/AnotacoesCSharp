@@ -4,7 +4,7 @@ Uma **expressão lambda** é um *método anônimo* que podemos usar para criar *
 Usando **expressões lambda**, podemos gravar *métodos locais*, que podem ser passados como argumentos ou serem retornados como o valor de chamadas de método.
 
 ## Sintaxe
-Uma Expressão lambda tem um lado <font color="green">esquerdo</font> e um lado <font color="blue">direito</font>, seperados pelo *operador lambda* <font color="darkred">=></font> (significa "vá para").
+Uma Expressão lambda tem um lado <font color="green">esquerdo</font> e um lado <font color="blue">direito</font>, separados pelo *operador lambda* <font color="darkred">=></font> (significa "vá para").
 
 Exemplo:
 
