@@ -70,7 +70,7 @@ Nota: [diferenças de IEnumerable para List](conceitos/ienumerable_e_list)
 ## Desvantagens da LINQ
 
 - Consultas muito complexas são difícieis de escrever
-- Não aproveita ao máximo os recursos da SQL, como o plano de execução em cache para o procedimento armazenado.
+- Não aproveita ao máximo os recursos da [SQL](sql.md), como o plano de execução em cache para o procedimento armazenado.
 - Consultas mal escritas tendem a ter um desempenho pior.
 - Alterações nas consultas exigem recompilar a aplicação e refazer o deploy.
 
