@@ -24,7 +24,9 @@ Agora, considere a função a seguir:
 ```cs
 private int ExemploDeFuncao(string str, bool condicao)
 {
-	...
+	if(condicao)
+		return 0;
+	return str.length;
 }
 ```
 Como esta função acima possui uma assinatura igual a do delegate, ela pode ser passada para o delegate da seguinte forma:
@@ -364,9 +366,9 @@ namespace DelegateAction;
 
 public class Program
 {
-    static void Dividir(double n1, double n2)
+    static void Dividir(double d1, double d2)
     {
-        double resultado = n1 / n2;
+        double resultado = d1 / d2;
         Console.WriteLine("Divisão: " + resultado);
     }
 

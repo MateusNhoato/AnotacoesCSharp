@@ -8,13 +8,13 @@
         "type": "tabs",
         "children": [
           {
-            "id": "8e90ea495215ecac",
+            "id": "7d89bbf569370450",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "conceitos/poo.md",
-                "mode": "source",
+                "file": "teste_unitario.md",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -69,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "e4d26bb160610ef2",
@@ -85,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "conceitos/poo.md",
+                "file": "teste_unitario.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "conceitos/poo.md",
+                "file": "teste_unitario.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "conceitos/poo.md"
+                "file": "teste_unitario.md"
               }
             }
           }
@@ -146,17 +147,22 @@
       "command-palette:Abrir paleta de comandos": false
     }
   },
-  "active": "8e90ea495215ecac",
+  "active": "7d89bbf569370450",
   "lastOpenFiles": [
-    "linq.md",
-    "sql.md",
-    "conceitos/poo.md",
-    "conceitos/modificadores_de_acesso.md",
-    "conceitos/polimorfismo.md",
-    "conceitos/heranca.md",
-    "conceitos/classe.md",
+    "conceitos/delegates.md",
+    "teste_unitario.md",
+    "img/tdd.png",
+    "img/tdd.png.opdownload",
+    "web_api.md",
+    "Sem título.md",
     "javascript.md",
-    "uml.md",
-    "Sem título.md"
+    "sql.md",
+    "aplicacao_web_mvc.md",
+    "linq.md",
+    "conceitos/json.md",
+    "conceitos/http.md",
+    "conceitos/xml.md",
+    "Sem título.canvas",
+    "conceitos/tempo_de_vida_de_servico.md"
   ]
 }
