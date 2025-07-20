@@ -151,5 +151,50 @@ A classe **ControllerBase** fornece muitas propriedades e métodos que são úte
 
 O nome de um Controller é formado pelo o nome do controlador seguido do sufixo Controller. Ex: CategoriasControler, ProdutosController
 
+#### Atributos do Controller
+
+O atributo **ApiControler** permite decorar os controladores habilitando recursos como:
+- Requisito de roteamento de atributo
+- Resposta 400 automáticas (Validação do Model State)
+- Inferência de parâmetro de origem de associação
+- Inferência de solicitação de dados de várias partes/formulários
+- Uso de **Problem Details** para códigos de erro
+
+O atributo **Route** especifica um padrão de URL para acessar um **controller ou action**:
+`[Route("[controller]")` -> indica a rota com o nome do controlador
+
+## Registro do serviço
+
+Para que os controladores possam ser utilizados, precisamos configurar algumas coisas na classe Program:
+
+```cs
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+
+var app = builder.Build();
+
+// Configura os pedidos HTTP
+app.UseHttpsRedirection();
+app.UseAuthorization();
+
+// Mapeamento dos controllers
+app.MapControllers();
+
+// Faz o programa rodar
+app.Run();
+```
+
+
+
 
 ### Minimal APIs
+
+As Minimal APIs usam os novos recursos do C# como Global using e unstruções de nível superior, de forma a otimizar a experiência de inicialização do aplicativo. Usando onvo template para criar uma Web Api temos que:
+
+- Não existe mais o arquivo Startup.cs
+- É usado o novo recurso implicit usings
+- É usado o novo modelo de hospedagem com WebApplication.Createbuilder
+- As instruções de nível superior são usadas no arquivo Programa.cs (sem namespace, classe ou declarações de método)
+- São usados os tipos de referência anuláveis
+
